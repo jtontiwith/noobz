@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 //this makes mongoose use built in es6 promises
 mongoose.Promise = global.Promise;
@@ -10,26 +12,12 @@ const { PORT, DATABASE_URL } = require('./config');
 //we also need access to the model 
 const { clientProto } = require('./models');
 
+const jsonParser = bodyParser.json();
 const app = express();
 app.use(express.static('public'));
+app.use(morgan('common'));
 
-
-
-app.get('/restaurants', (req, res) => {
-  Restaurant
-    .find()
-    .then(restaurants => {
-      res.json({
-        restaurants: restaurants.map(
-          (restaurant) => restaurant.serialize())
-      });
-    })
-    .catch(
-      err => {
-        console.error(err);
-        res.status(500).json({message: 'Internal server error'});
-    });
-});
+//the requests handlers start here
 
 app.get('/projects', (req, res) => {
   clientProto
@@ -46,6 +34,32 @@ app.get('/projects', (req, res) => {
         res.status(500).json({message: 'Internal server error'});
     });
 });
+
+//here's the post request
+
+app.post('/projects', (req, res) => {
+  const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens'];
+  for(let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if(!(field in req.body)) {
+      const message = `Missing ${field} in required fields`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+clientProto
+  .create({
+    shortDesc: req.body.shortDesc,
+    longDesc: req.body.longDesc,
+    userStories: req.body.screens
+  })
+  .then(clientProto => res.status(201).json(clientProto.serialize()))
+  .catch(err => {
+    console.error(err);
+    res.status(501).json({message: 'oh shit, Internal Server Error'})
+  });
+});
+
 
 
 
