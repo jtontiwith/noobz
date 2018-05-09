@@ -17,9 +17,14 @@ const clientProtoSchema = mongoose.Schema({
 
 clientProtoSchema.methods.serialize = function() {
     return {
-        tagline: this.shortDesc    
+        id: this.id,
+        shortDesc: this.shortDesc,
+        longDesc: this.longDesc,
+        userStories: this.userStories,
+        screens: this.screens
     };
 }
+
 
 //now that everything above is defined we make the call to model 
 
