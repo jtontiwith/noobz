@@ -46,6 +46,16 @@ app.get('/projects', (req, res) => {
     });
 });
 
+app.get('/projects/:id', (req, res) => {
+  clientProto
+    .findById(req.params.id)
+    .then(clientProto => res.json(clientProto.serialize()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal Server Error' })
+    });
+});
+
 //here's the post request
 
 app.post('/projects', (req, res, next) => {
@@ -104,6 +114,7 @@ app.put('/projects/:id', (req, res) => {
   clientProto
   //use $set to update key value pairs 
   .findByIdAndUpdate(req.params.id, { $set: toUpdate })
+  //the params are from the URL, and the $set thing is mongo related
   .then(clientProto => res.status(204).end())
   .catch(err => res.status(500).json({ message: 'Internal Server Error' }));
 
@@ -141,7 +152,7 @@ function runServer(DATABASE_URL, port = PORT) {
       }
       server = app.listen(port, () => {
       console.log(`Your app is listening on port ${port}`);
-      resolve();
+      resolve(); //we resolve the promise after we start listening
     })
       .on('error', err => {
       mongoose.disconnect();
@@ -177,3 +188,5 @@ if (require.main === module) {
   };
   
 module.exports = {app, runServer, closeServer};
+//this has something to do with only being able to run this code 
+//outside a node.js environment

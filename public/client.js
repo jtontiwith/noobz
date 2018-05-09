@@ -207,18 +207,6 @@ $('.js-project-form').submit(event => {
   let longProjDesc = $('#long-desc').val();
   userProject['longDesc'] = longProjDesc;
   console.log(userProject);
-  
-  
-
-/*
-  $.ajax({
-    method: "POST",
-    url: "https://noobz.herokuapp.com/projects",
-    data: JSON.stringify({userProject: userProject}),
-    dataType: "json"  
-  })
-*/
-  
 
   $.ajax({
     url: requestUrl,
@@ -226,19 +214,40 @@ $('.js-project-form').submit(event => {
     //data: JSON.stringify(userProject),
     data: JSON.stringify(userProject),
     success: function(data) { 
+      addNewClientProtoToFeed(data.id);
       console.log('here is the response');
       console.log(data); // Set data that comes back from the server to 'text'
       $('.js-project-form').each(function(){
         this.reset();
       });
-      getAndDisplayProjects();
     },
     //success: postCallback(data),
     dataType: "json",
     contentType: "application/json"
-});
+  });
 
 });
+
+function addNewClientProtoToFeed(projectId) {
+  const urlWithID = `${requestUrl}/${projectId}`;
+
+  $.ajax({
+    url: urlWithID,
+    type: "GET",
+    success: function(data) { 
+      console.log('here is the response from getById!');
+      console.log(data); // Set data that comes back from the server to 'text'
+      $('.js-project-feed').append(
+        '<p>' + data.shortDesc + '</p>');
+    },
+    dataType: "json",
+    contentType: "application/json"
+  });  
+}
+
+
+
+
 
 //here the callback is received and put within a setTimeout
 //that waits one-tenth of a second and then fires displayProjects
