@@ -269,7 +269,7 @@ function getRecentProjects(callBackFn) {
       url: requestUrl,
       type: "GET",
       success: function(data) { 
-        console.log(JSON.stringify(data)); // Set data that comes back from the server to 'text'
+        console.log(data); // Set data that comes back from the server to 'text'
         callBackFn(data);
       },
       dataType: "json",
