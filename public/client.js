@@ -213,7 +213,7 @@ $('.js-project-form').submit(event => {
 
   $.ajax({
     method: "POST",
-    url: "     ",
+    url: "https://noobz.herokuapp.com/projects",
     data: {
       userProject: userProject
     }

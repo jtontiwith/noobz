@@ -18,6 +18,16 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(jsonParser);
 
+//enable CORS
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  next();
+});
+
+
 //the requests handlers start here
 
 app.get('/projects', (req, res) => {
@@ -112,7 +122,7 @@ app.delete('/projects/:id', (req, res) => {
    res.status(404).json({ message: 'Nobody Home' });
  });
 
-//jowel y randy aprentamente 
+ 
 
 
 // both runServer and closeServer need to access the same
