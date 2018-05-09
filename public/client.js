@@ -248,7 +248,7 @@ function postCallback(data) {
     url: requestUrl,
     type: "GET",
     success: function(data) { 
-      console.log(`this is the GET data: ${data}`); // Set data that comes back from the server to 'text'
+      console.log(JSON.stringify(data)); // Set data that comes back from the server to 'text'
     },
     dataType: "json",
     contentType: "application/json"
@@ -264,13 +264,24 @@ function postCallback(data) {
 //with the data
 
 function getRecentProjects(callBackFn) {
-    setTimeout(function() {callBackFn(MOCK_PROJECTS)}, 100)
+    //setTimeout(function() {callBackFn(MOCK_PROJECTS)}, 100)
+    $.ajax({
+      url: requestUrl,
+      type: "GET",
+      success: function(data) { 
+        console.log(JSON.stringify(data)); // Set data that comes back from the server to 'text'
+        callBackFn(data);
+      },
+      dataType: "json",
+      contentType: "application/json"
+  
+    })
 }
 
 function displayProjects(data) {
-    for (index in data.founderProjects) {
+    for (index in data.clientProtos) {
         $('.js-project-feed').append(
-            '<p>' + data.founderProjects[index].shortDesc + '</p>');
+            '<p>' + data.clientProtos[index].shortDesc + '</p>');
     }
 }
 
