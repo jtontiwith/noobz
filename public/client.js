@@ -231,7 +231,7 @@ $('.js-project-form').submit(event => {
       $('.js-project-form').each(function(){
         this.reset();
       });
-      postCallback(data);
+      getAndDisplayProjects();
     },
     //success: postCallback(data),
     dataType: "json",
@@ -239,25 +239,6 @@ $('.js-project-form').submit(event => {
 });
 
 });
-
-
-function postCallback(data) {
-  console.log('now ready for this');
-  console.log(data);
-  $.ajax({
-    url: requestUrl,
-    type: "GET",
-    success: function(data) { 
-      console.log(JSON.stringify(data)); // Set data that comes back from the server to 'text'
-    },
-    dataType: "json",
-    contentType: "application/json"
-
-  })
-}
- 
-
-
 
 //here the callback is received and put within a setTimeout
 //that waits one-tenth of a second and then fires displayProjects
