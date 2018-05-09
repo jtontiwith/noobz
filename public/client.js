@@ -1,6 +1,6 @@
 let mvpUserStories = [];
 let seesDoes = [];
-let userProject = {"id": "0000000"};
+let userProject = {};
 
 
 
@@ -214,9 +214,7 @@ $('.js-project-form').submit(event => {
   $.ajax({
     method: "POST",
     url: "https://noobz.herokuapp.com/projects",
-    data: {
-      userProject: userProject
-    }
+    data: JSON.stringify(userProject)
   })
     .done(function( msg ) {
       alert( "Data Saved: " + msg );
@@ -226,6 +224,10 @@ $('.js-project-form').submit(event => {
 
 });
 
+
+//data: {
+    //  userProject: userProject
+    //}
 
 //What am I doing exactly with X?
 /*
