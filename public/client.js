@@ -218,7 +218,7 @@ $('.js-project-form').submit(event => {
     dataType: "json"  
   })
 */
-  let url = "https://noobz.herokuapp.com/projects";
+  let url = "/projects";
 
   $.ajax({
     url: url,
