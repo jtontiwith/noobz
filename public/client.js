@@ -1,7 +1,7 @@
 let mvpUserStories = [];
 let seesDoes = [];
 let userProject = {};
-
+let requestUrl = "/projects";
 
 
 const MOCK_PROJECTS = {
@@ -218,38 +218,45 @@ $('.js-project-form').submit(event => {
     dataType: "json"  
   })
 */
-  let url = "/projects";
+  
 
   $.ajax({
-    url: url,
+    url: requestUrl,
     type: "POST",
     //data: JSON.stringify(userProject),
     data: JSON.stringify(userProject),
     success: function(data) { 
       console.log('here is the response');
       console.log(data); // Set data that comes back from the server to 'text'
-
+      $('.js-project-form').each(function(){
+        this.reset();
+      });
+      postCallback(data);
     },
+    //success: postCallback(data),
     dataType: "json",
     contentType: "application/json"
 });
 
-
-
-
 });
 
 
-//data: {
-    //    userProject: userProject
-    //}
+function postCallback(data) {
+  console.log('now ready for this');
+  console.log(data);
+  $.ajax({
+    url: requestUrl,
+    type: "GET",
+    success: function(data) { 
+      console.log(`this is the GET data: ${data}`); // Set data that comes back from the server to 'text'
+    },
+    dataType: "json",
+    contentType: "application/json"
 
-//What am I doing exactly with X?
-/*
-      .done(function( msg ) {
-      alert( "Data Saved: " + msg );
-    });
-*/
+  })
+}
+ 
+
 
 
 //here the callback is received and put within a setTimeout
