@@ -210,15 +210,28 @@ $('.js-project-form').submit(event => {
   
   
 
-
+/*
   $.ajax({
     method: "POST",
     url: "https://noobz.herokuapp.com/projects",
-    data: JSON.stringify(userProject)
+    data: JSON.stringify({userProject: userProject}),
+    dataType: "json"  
   })
-    .done(function( msg ) {
-      alert( "Data Saved: " + msg );
-    });
+*/
+  let url = "https://noobz.herokuapp.com/projects";
+
+  $.ajax({
+    url: url,
+    type: "POST",
+    data: JSON.stringify({userProject: userProject}),
+    contentType: "application/json",
+    success: function(data) { 
+      console.log('here is the response');
+      console.log(data); // Set data that comes back from the server to 'text'
+
+    }
+});
+
 
 
 
@@ -226,11 +239,14 @@ $('.js-project-form').submit(event => {
 
 
 //data: {
-    //  userProject: userProject
+    //    userProject: userProject
     //}
 
 //What am I doing exactly with X?
 /*
+      .done(function( msg ) {
+      alert( "Data Saved: " + msg );
+    });
 */
 
 

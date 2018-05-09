@@ -48,7 +48,7 @@ app.get('/projects', (req, res) => {
 
 //here's the post request
 
-app.post('/projects', (req, res) => {
+app.post('/projects', (req, res, next) => {
   console.log(req.body);
   const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens'];
   for(let i = 0; i < requiredFields.length; i++) {
