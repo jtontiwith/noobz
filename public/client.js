@@ -223,7 +223,8 @@ $('.js-project-form').submit(event => {
   $.ajax({
     url: url,
     type: "POST",
-    data: JSON.stringify(userProject),
+    //data: JSON.stringify(userProject),
+    data: JSON.stringify({userProject: userProject}),
     success: function(data) { 
       console.log('here is the response');
       console.log(data); // Set data that comes back from the server to 'text'
