@@ -224,7 +224,7 @@ $('.js-project-form').submit(event => {
     url: url,
     type: "POST",
     //data: JSON.stringify(userProject),
-    data: JSON.stringify({userProject: userProject}),
+    data: JSON.stringify({userProject}),
     success: function(data) { 
       console.log('here is the response');
       console.log(data); // Set data that comes back from the server to 'text'
