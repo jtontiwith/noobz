@@ -223,6 +223,7 @@ $('.js-project-form').submit(event => {
   $.ajax({
     url: url,
     type: "POST",
+    dataType: "json",
     data: JSON.stringify({userProject: userProject}),
     contentType: "application/json",
     success: function(data) { 
