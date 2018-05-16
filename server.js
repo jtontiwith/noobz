@@ -1,7 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+
+
+const { router: usersRouter } = require('./users');
+const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
+
 
 //this makes mongoose use built in es6 promises
 mongoose.Promise = global.Promise;
@@ -27,6 +34,27 @@ app.use(function (req, res, next) {
   next();
 });
 
+//have to import the strategies below if we want to use them 
+//in routes
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+//remember that .use is just saying that on '/x/x/' route use the 
+//following middleware function, and also remember that here below
+//I define the /api/ part of the path, it's just to differentiate from
+//the regular path, that's all
+app.use('/api/users/', usersRouter);
+app.use('/api/auth/', authRouter);
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
+
+// A protected endpoint which needs a valid JWT to access it
+
+app.get('/api/protected', jwtAuth, (req, res) => {
+  return res.json({
+    data: 'secret buddy'
+  });
+});
 
 //the requests handlers start here
 
@@ -60,7 +88,7 @@ app.get('/projects/:id', (req, res) => {
 
 app.post('/projects', (req, res, next) => {
   console.log(req.body);
-  const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens'];
+  const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens', 'email'];
   for(let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if(!(field in req.body)) {
@@ -74,7 +102,8 @@ clientProto
     shortDesc: req.body.shortDesc,
     longDesc: req.body.longDesc,
     userStories:req.body.userStories,
-    screens: req.body.screens
+    screens: req.body.screens,
+    email: req.body.email
   })
   .then(clientProto => res.status(201).json(clientProto.serialize()))
   .catch(err => {
@@ -103,7 +132,7 @@ app.put('/projects/:id', (req, res) => {
   console.log(`Updating client project ${req.params.id}`);
   
   const toUpdate = {};
-  const updateableFields = ['shortDesc', 'longDesc', 'userStories', 'screens'];
+  const updateableFields = ['shortDesc', 'longDesc', 'userStories', 'screens', 'email'];
 
   updateableFields.forEach(field => {
     if(field in req.body) {

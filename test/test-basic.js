@@ -204,4 +204,18 @@ describe('a get request to the root url', function() {
 
 });
 
+====Stuff from the travis.yml file====
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: XGum+GyT7NLCBvKkTBnmdfbaWF1obVvSVBmUCWrXfpc+zBy8fEHe+TUvkkENS5N0cULKwytz5LsJzzXGVh0p+C7smEYeUyjct6xB0ryTqOHxY5D1L2PuBdOOVBkE5/JxrCWS1Xu8aA9v4Jl6larC4Tw/z5Bkt4piKSZnSl9qo287/WFn/yrWq0TC10tbQeij0ZuC6kH2rJEq/i+z6OMxw3PguEeoMONzlEAc9spv2G5b+bTVzoa+hihMF4FRR4U+HMgBFzavA2txAYoUj18gf7OSSkvMmFTsutgYqaKrT3zX4j3bf0eSgLAxbJUQmFP1wwq0rgWxhMhs7gddVsAdAy8G0xRzbOhNcKlZHDkNlcA6PgZQAMPPINOUgCk/atmskAfFHrI7hKW5YKpgnjPgD46QOagHO8k+bFTwdOQpRF7myrytXt+FXbMSG7mfhjZDmlTSVTwa/hOWe9LBtMVMBlwi7IGGi/QTV+e48Z6EsUB+OC+mFS8d08+MvGBMklHah16WmxHgDRz9l9jcrbm6tCQQzdqpDl9PmggyMwD5QFtzhPypQyW4yJBrIlFJs63JBcmDjfq21VIadMtcY8+zmXlZVDLMn3k+MQ3P4ekzaFuhAJXo6sM7FyT1Yk9yIdF+AbUoMWa7H0BCgSZGqb1i1f36Z/3+t1KNGJu/w4GQZNI=
+  app: noobz
+  on:
+    repo: jtontiwith/noobz
+
+
+
+
+
 */

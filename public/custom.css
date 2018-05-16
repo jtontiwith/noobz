@@ -1,0 +1,10 @@
+
+.detail-toggle {
+  display: none;
+}
+
+dl:hover { 
+  background-color: #e6e6e6; 
+  transition: 30ms;
+  cursor: pointer;
+}

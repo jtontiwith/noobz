@@ -10,7 +10,8 @@ const clientProtoSchema = mongoose.Schema({
     //userStories will be an array of strings
     userStories: [String],
     //screen will be an array of subarrays of strings
-    screens: [[String]]  
+    screens: [[String]],  
+    email: {type: String, required: true}
 });
 
 //instance method to expose some of the data
@@ -21,7 +22,8 @@ clientProtoSchema.methods.serialize = function() {
         shortDesc: this.shortDesc,
         longDesc: this.longDesc,
         userStories: this.userStories,
-        screens: this.screens
+        screens: this.screens,
+        email: this.email
     };
 }
 
