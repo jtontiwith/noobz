@@ -5,13 +5,12 @@ const bodyParser = require('body-parser');
 //have to import the 3 libraries above as you'll be 
 //handling requests here 
 const jwt = require('jsonwebtoken');
-
 const config = require('../config');
 const router = express.Router();
 
 const createAuthToken = function(user) {
   return jwt.sign({user}, config.JWT_SECRET, {
-    subject: user.username,
+    subject: user.email, // <-this could be wrong
     expiresIn: config.JWT_EXPIRY,
     algorithm: 'HS256'
   });
@@ -19,10 +18,18 @@ const createAuthToken = function(user) {
 
 const localAuth = passport.authenticate('local', {session: false});
 router.use(bodyParser.json());
-//the user provides a username and password to login
+//the user provides an email and password to login
 router.post('/login', localAuth, (req, res) => {
   const authToken = createAuthToken(req.user.serialize());
-  res.json({authToken});
+  //res.json({authToken}); <-how it was before I added user id
+  //I am leaving this here to remind me to ask about it b/c maybe it's a 
+  //bad practice
+  res.json({authToken,
+    user_id: req.user.id,
+    prototypes_id: req.user.proto_ids
+  });
+  
+
 });
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
@@ -32,6 +39,6 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 router.post('/refresh', jwtAuth, (req, res) => {
   const authToken = createAuthToken(req.user);
   res.json({authToken});
-})
+});
 
 module.exports = {router};

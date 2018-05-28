@@ -4,39 +4,138 @@ let userProject = {};
 let requestUrl = "/projects";
 
 
-const MOCK_PROJECTS = {
-    "founderProjects": [
-        {
-            "id": "1111111",
-            "shortDesc": "A simple way to snooze your tabs for later.",
-            "longDesc": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            "userStories": ["Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla"],
-            "screens": [["what the user sees", "what the user does"], ["what the user sees", "what the user does"], ["what the user sees", "what the user does"]]
-        },
-        {
-            "id": "2222222",
-            "shortDesc": "Modern discussion boards for your audience.",
-            "longDesc": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            "userStories": ["Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla"],
-            "screens": [["what the user sees", "what the user does"], ["what the user sees", "what the user does"], ["what the user sees", "what the user does"]]
-        },
-        {
-            "id": "3333333",
-            "shortDesc": "An app that makes you want to beat procrastination.",
-            "longDesc": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            "userStories": ["Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla"],
-            "screens": [["what the user sees", "what the user does"], ["what the user sees", "what the user does"], ["what the user sees", "what the user does"]]
-        },
-        {
-            "id": "4444444",
-            "shortDesc": "A simple, beautiful and agile project management software.",
-            "longDesc": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            "userStories": ["Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla", "Sed ut perspiciatis unde omnis iste natus error", "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla"],
-            "screens": [["what the user sees", "what the user does"], ["what the user sees", "what the user does"], ["what the user sees", "what the user does"]]
-        },
-    ]
+//here we register and sign in a user
+function registerAndOrLogin(user) {
+  if(user) {
+    $(`.js-register-and-login-form`).html(`
+    <fieldset class="sign-in">
+      <legend>Login</legend>
+      <p>
+        <label for="email">Email</label>
+        <input name="username" type="email" id="email" value="${user.email}">
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input name="password" type="password" id="password">
+      </p>
+    </fieldset>
+    <button class="login" type="submit">Login</button>`);
+  } else {
+    $(`.js-register-and-login-form`).html(`
+      <fieldset class="sign-up">
+        <legend>Sign Up</legend>
+        <p>
+          <label for="email">Email</label>
+          <input name="email" type="email" id="email">
+        </p>
+        <p>
+          <label for="password">Password</label>
+          <input name="password" type="password" id="password">
+        </p>
+        <p>
+          <label for="firstName">First Name</label>
+          <input name="firstName" type="text" id="firstName">
+        </p>
+        <p>
+          <label for="lastName">Last Name</label>
+          <input name="lastName" type="text" id="lastName">
+        </p>    
+      </fieldset>
+      <button class="register" type="submit">Register</button>
+      <button class="go-to-login" type="button">Login</button>`); 
+    }
+  }
 
+  function getToLogin() {
+    $(`.js-register-and-login-form`).on('click', '.go-to-login', function(event) {
+      console.log('the login button is workin');
+      $(`.js-register-and-login-form`).html(`
+      <fieldset class="sign-in">
+        <legend>Login</legend>
+        <p>
+          <label for="email">Email</label>
+          <input name="username" type="email" id="email">
+        </p>
+        <p>
+          <label for="password">Password</label>
+          <input name="password" type="password" id="password">
+        </p>
+      </fieldset>
+      <button class="login" type="submit">Login</button>`);
+    });
+  }
+
+  function postRegistrationOrLogin() {
+    $(`.js-register-and-login-form`).on('submit', function(event) {
+      event.preventDefault();
+      let formArray = $(this).serializeArray();
+      
+      if(formArray.length === 4) {
+        let userRegObject = {};
+        
+        for(let i = 0; i < formArray.length; i++) {
+          userRegObject[formArray[i].name] = formArray[i]['value'];
+        }
+        console.log(userRegObject);
+        
+        $.ajax({
+          url: "/api/users",
+          type: "POST",
+          data: JSON.stringify(userRegObject),
+          success: function(data) {
+            console.log(data)
+            registerAndOrLogin(data);
+          },
+          dataType: "json",
+          contentType: "application/json"
+        })
+      } else {
+        console.log('something else')
+        let userLoginObject = {};
+        for(let i = 0; i < formArray.length; i++) {
+          userLoginObject[formArray[i].name] = formArray[i]['value'];
+        }
+        console.log(userLoginObject);
+        
+        $.ajax({
+          url: "/api/auth/login",
+          type: "POST",
+          data: JSON.stringify(userLoginObject),
+          success: function(data) {
+            console.log(data);
+            localStorage.setItem('jwt', data.authToken);  
+            localStorage.setItem('user_id', data.user_id);
+            //putting the ids of the user's prototype (if any)
+            //into a comma separated string b/c localStorage only
+            //stores strings
+            let protoString = data.prototypes_id.join();  
+            localStorage.setItem('prototype_ids', protoString);
+            
+          },
+          dataType: "json",
+          contentType: "application/json"
+        })
+      }  
+    });  
+  }
+
+function getUserProjects() {
+  $.ajax({
+    url: `/projects/${localStorage.user_id}`,
+    type: GET,
+    success: function(data) { 
+      console.log(data); // Set data that comes back from the server to 'text'
+      $('.js-project-feed').hide();
+      $('.js-personal-feed').append();
+    },
+    dataType: "json",
+    contentType: "application/json"
+  })
 }
+
+//
+
+
 
 //here we pop an input field that ask the user to enter a descriptive
 //tagline for their app that's suppose to interest someone in knowing
@@ -53,7 +152,9 @@ function getProjectFromFounder() {
     </fieldset>
   `);
 }
+  
 
+ 
 //after the user fills out their tagline they pop a longer 
 //form to provide the info necessary to create an MVP
 function expandFullProjectForm() {
@@ -101,12 +202,6 @@ function expandFullProjectForm() {
             <div style="margin-top: 10px;"><textarea id="user-does" placeholder="What the user does..."></textarea></div>
             <button type="button" class="more-screens">next screen</button>
           </div>
-        </fieldset>
-        <fieldset class="email-input">
-          <p>
-            <label for="email">Where can noob developers contact you?</label>
-            <input type="email" name="email" id="email">
-          </p>
         </fieldset>
         <p><button type="submit">Let's do this</button><button type="button" class="cancel">Nah, I'm good</button></p>`);
       console.log('does this run?')
@@ -250,22 +345,20 @@ $('.js-project-form').submit(event => {
   event.preventDefault();
   let longProjDesc = $('#long-desc').val();
   userProject['longDesc'] = longProjDesc;
-  
-  let emailInput = $('#email').val();
-  
-  if(emailInput == "") {
-    alert('We need your email. Noobz devs have know where to find you');
-  } else {
-    userProject['email'] = emailInput;
-    console.log(userProject);
+  userProject['user_id'] = localStorage.user_id;  
+  console.log(userProject);
+    //so perhaps here there is a get request to get the
+    //id of the user
 
     $.ajax({
       url: requestUrl,
       type: "POST",
       //data: JSON.stringify(userProject),
       data: JSON.stringify(userProject),
+      headers: { "Authorization": 'Bearer ' + localStorage.jwt },
       success: function(data) { 
-        addNewClientProtoToFeed(data.id);
+        //addNewClientProtoToFeed(data.id);
+        addNewClientProtoToFeed();
         console.log('here is the response');
         console.log(data); // Set data that comes back from the server to 'text'
         $('.js-project-form').each(function(){
@@ -276,12 +369,12 @@ $('.js-project-form').submit(event => {
       dataType: "json",
       contentType: "application/json"
     });
+    console.log('right after the ajax call that does not work');
     getProjectFromFounder();
-  }
 });
 
-function addNewClientProtoToFeed(projectId) {
-  const urlWithID = `${requestUrl}/${projectId}`;
+function addNewClientProtoToFeed() {
+  const urlWithID = `${requestUrl}/${localStorage.user_id}`;
 
   $.ajax({
     url: urlWithID,
@@ -289,16 +382,16 @@ function addNewClientProtoToFeed(projectId) {
     success: function(data) { 
       console.log('here is the response from getById!');
       console.log(data); // Set data that comes back from the server to 'text'
-      $('.js-project-feed').append(
-        '<p>' + data.shortDesc + '</p>');
+      //How can I make this use existing infrastructure?
+      displayProjects(data);
+      //$('.js-project-feed').hide();
+      //$('.js-personal-feed').html(
+      //  '<p>' + data.shortDesc + '</p>');
     },
     dataType: "json",
     contentType: "application/json"
   });  
 }
-
-
-
 
 
 //here the callback is received and put within a setTimeout
@@ -319,7 +412,7 @@ function getRecentProjects(callBackFn) {
   
     })
 }
-
+/*
 function displayProjects(data) {
     for (index in data.clientProtos) {
         $('.js-project-feed').append(
@@ -334,7 +427,90 @@ function displayProjects(data) {
           </dl>`);
     }
     fullProjectDisplay();
+} */
+
+function displayProjects(data) {
+  let projectsArray = [];
+  //if data.clientProtos[index].published == false && l
+  /*
+  -I don't want all prototypes to be published to the feed automatically
+  -I want all prototypes that have "published: true" to be public to the feed
+  -I want logged in user's to be able to see their unpublished prototypes
+  -so the states are logged-in user 
+
+  
+  */
+  for (index in data.clientProtos) {
+    if(localStorage.user_id === data.clientProtos[index].user_id) {
+    projectsArray.push(
+      `<dl class="js-client-project" id="${data.clientProtos[index].id}" style="border: 1px solid black; margin-bottom: 10px;">
+        <dt>${data.clientProtos[index].shortDesc}</dt>
+        <dt>${data.clientProtos[index].longDesc}</dt>
+        <div class="detail-toggle">    
+          <dd>${data.clientProtos[index].userStories}</dd>
+          <dd>${data.clientProtos[index].screens}</dd>
+          <dd>${data.clientProtos[index].email}</dd>
+        </div>
+      </dl>
+      <form class="js-publish" role="form">
+        <fieldset>
+          <legend>Status</legend>
+          <input class="js-make-public" type="checkbox" id="${data.clientProtos[index].id}" name="public" value="public">
+          <label for="${data.clientProtos[index].id}">Public</label>
+        </fieldset>
+      </form>
+      `)         
+    } else {
+    projectsArray.push(
+      `<dl class="js-client-project" id="${data.clientProtos[index].id}" style="border: 1px solid black; margin-bottom: 10px;">
+        <dt>${data.clientProtos[index].shortDesc}</dt>
+        <dt>${data.clientProtos[index].longDesc}</dt>
+        <div class="detail-toggle">    
+          <dd>${data.clientProtos[index].userStories}</dd>
+          <dd>${data.clientProtos[index].screens}</dd>
+          <dd>${data.clientProtos[index].email}</dd>
+        </div>
+      </dl>
+      `)
+    }
+  }
+  $('.js-project-feed').html(projectsArray);
+  fullProjectDisplay();
+  publishPrototypeToFeed();
 }
+
+
+function publishPrototypeToFeed() {
+  $('.js-make-public').on('change', function(event) {
+    //this is for setting the boolean to true/false and just making
+    //it happen here in the client instead of playing around server side
+    //just writing an iterator (j) and assigning true or false based on even
+    //or odd numbers
+    let j = 1;
+    j++;
+    let status; 
+    j % 2 == 0 ? status = true : status = false;
+    console.log(`making the prototype public...? ${status}`)
+    let prototypeId = this.id;
+    console.log(prototypeId);
+
+    $.ajax({
+      url: `${requestUrl}/${prototypeId}`, 
+      type: "PUT",
+      data: JSON.stringify({
+        id: prototypeId,
+        published: status}),
+      headers: { "Authorization": 'Bearer ' + localStorage.jwt },
+      success: function(data) { 
+        console.log(data); // Set data that comes back from the server to 'text'
+      },
+      dataType: "json",
+      contentType: "application/json"
+    })
+  });
+}
+
+
 
 function fullProjectDisplay() {
   $('.js-client-project').on('click', 'dt', function(event) {
@@ -342,7 +518,6 @@ function fullProjectDisplay() {
     $(this).parent().find('.detail-toggle').toggle();
   });
 }
-
 
 
 //here we are calling getRecentProjects and passing it a callback
@@ -359,6 +534,9 @@ function getAndDisplayProjects() {
 
 
 $(() => {
+  registerAndOrLogin();
+  postRegistrationOrLogin();
+  getToLogin();
   getProjectFromFounder();
   expandFullProjectForm();
   getAndDisplayProjects();
@@ -374,6 +552,15 @@ $(() => {
 button to open up the rest
 DONE!!! -what I am trying to do it have detail hidden and show/hide based on 
   when a user clicks the button 
+DONE-when a user hits 'let's do this' I want to take that user to their 
+dashboard and show them their prototypes
+-I want a users prototypes to have a true/false field the user can toggle
+publish the the prototype to the feed
+-
+
+
+
+
 
 
 Problems with the app you could solve:

@@ -8,9 +8,10 @@ const router = express.Router();
 
 const jsonParser = bodyParser.json();
 
+
 //here we are posting to register a new user
 router.post('/', jsonParser, (req, res) => {
-  const requiredFields = ['username', 'password'];
+  const requiredFields = ['email', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
   //so this above iterates through the properties of the request body
   //object, grabs each one out, and field => !(field in req.body) and with 
@@ -26,7 +27,7 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  const stringFields = ['username', 'password', 'firstName', 'lastName'];
+  const stringFields = ['email', 'password', 'firstName', 'lastName'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -40,7 +41,7 @@ router.post('/', jsonParser, (req, res) => {
     });  
   }
 
-  const trimmedFields = ['username', 'password'];
+  const trimmedFields = ['email', 'password'];
   const nonTrimmedFields = trimmedFields.find(field => req.body[field].trim() !== req.body[field]);
 
   if(nonTrimmedFields) {
@@ -53,7 +54,7 @@ router.post('/', jsonParser, (req, res) => {
   }
 
   const sizedFields = {
-    username: {
+    email: {
       min: 5
     },
     password: {
@@ -78,12 +79,12 @@ router.post('/', jsonParser, (req, res) => {
     });  
   }
 
-  let {username, password, firstName = '', lastName = ''} = req.body;
+  let {email, password, firstName = '', lastName = ''} = req.body;
 
   firstName = firstName.trim();
   lastName = lastName.trim();
 
-  return User.find({username})
+  return User.find({email})
     .count()
     .then(count => {
       if (count > 0) {
@@ -91,7 +92,7 @@ router.post('/', jsonParser, (req, res) => {
           code: 422,
           reason: 'ValidationError',
           message: 'Username already taken',
-          location: 'username'
+          location: 'email'
         });
       }
       //if the username is not taken
@@ -99,7 +100,7 @@ router.post('/', jsonParser, (req, res) => {
     })
     .then(hash => {
       return User.create({
-        username, 
+        email, 
         password: hash,
         firstName,
         lastName
