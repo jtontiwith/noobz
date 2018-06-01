@@ -1,10 +1,177 @@
+/*
+font-family: 'Poppins', sans-serif;
+font-family: 'Merriweather Sans', sans-serif;
+color pallet: https://color.adobe.com/Flat-UI-color-theme-2469224/
+*/
 
 .detail-toggle {
   display: none;
 }
 
+
+
 dl:hover { 
   background-color: #e6e6e6; 
   transition: 30ms;
   cursor: pointer;
+}
+
+* {
+  /*font-family: "Palatino Linotype",Palatino,Palladio;*/
+  font-family: 'Poppins', sans-serif; 
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5 {
+font-family: 'Merriweather Sans', sans-serif;
+}
+
+.name-input {
+  border: none;
+  border-color: transparent;
+  height: 25px;
+  font-size: 29px;
+}
+
+.tagline-entry {
+  font-size: 29px;
+}
+
+
+.app-form {
+  margin-top: 5px;
+  margin-bottom: 13px;
+}
+
+
+/* full page background image */
+
+html { 
+  background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) ), url(https://source.unsplash.com/-8ttvM3Ca94) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+}
+ 
+body {
+  padding: 20px;
+}
+
+/* login and register modal */
+
+.login-register {
+  width: 400px;
+  /*float: right;*/
+  /*margin-right: 50px;*/
+  /*margin-top: 100px;*/
+  border-radius: 1px;
+  background-color: #FFF;
+  border-top: 4px solid #3498DB;
+  display: inline-block;
+}
+
+.hero-area {
+  display: inline-block;
+  min-width: 400px;
+  vertical-align: top;
+}
+
+.fa {
+  font-size: 50px;
+  color: #fff;
+  opacity: .8;
+  margin-bottom: 15px;
+  margin-right: 15px;
+  min-width: 60px;
+}
+
+.fa-icon-subhead {
+  display: inline-block;
+  color: #fff;
+  font-size: 20px;
+  max-width:300px;
+  word-wrap:break-word;
+  line-height: 120%; 
+}
+
+.hero-area ul {
+  float: left;
+}
+
+.centered-div {
+  text-align: center;
+  margin-top: 10%;
+}
+
+li {
+  text-align: left;
+}
+
+/*
+.login-register fieldset {
+  background-color: #ECF0F1;
+}
+*/
+
+legend {
+  margin-bottom: 10px;
+  font: 600 25px 'Merriweather Sans', sans-serif;
+}
+
+/* Style inputs, select elements and textareas */
+input {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  resize: vertical;
+}
+
+/* Style the label to display next to the inputs */
+label {
+  display: none;
+}
+
+/* Style the submit button */
+button {
+  background-color: #3498DB;
+  color: white;
+  float: right;
+  border-radius: 100px;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.register-footer, .login-footer {
+  background-color: #ECF0F1;
+  padding: 15px;
+}
+
+.reg-login-form {
+  padding: 22px 35px 35px 35px;
+}
+
+a {
+  color: #E74C3C;
+}
+
+/* ===== LOGO ===== */
+
+.logo {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  color: #fff;
+  opacity: .5;
 }

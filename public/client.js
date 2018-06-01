@@ -6,63 +6,74 @@ let requestUrl = "/projects";
 
 //here we register and sign in a user
 function registerAndOrLogin(user) {
-  if(user) {
+  /* if(user) {
     $(`.js-register-and-login-form`).html(`
     <fieldset class="sign-in">
-      <legend>Login</legend>
-      <p>
+      <legend>blah</legend>
+      <div class="col-25">
         <label for="email">Email</label>
+      </div>
+      <div class="col-75">
         <input name="username" type="email" id="email" value="${user.email}">
-      </p>
+      </div>
       <p>
         <label for="password">Password</label>
         <input name="password" type="password" id="password">
       </p>
     </fieldset>
     <button class="login" type="submit">Login</button>`);
-  } else {
+  } else { */
     $(`.js-register-and-login-form`).html(`
       <fieldset class="sign-up">
-        <legend>Sign Up</legend>
+        <legend>Sign in to n00bz</legend>
         <p>
           <label for="email">Email</label>
-          <input name="email" type="email" id="email">
+          <input name="email" type="email" id="email" placeholder="email" required>
         </p>
         <p>
           <label for="password">Password</label>
-          <input name="password" type="password" id="password">
+          <input name="password" type="password" id="password" placeholder="password" required>
         </p>
         <p>
           <label for="firstName">First Name</label>
-          <input name="firstName" type="text" id="firstName">
+          <input name="firstName" type="text" id="firstName" placeholder="first name" required>
         </p>
         <p>
           <label for="lastName">Last Name</label>
-          <input name="lastName" type="text" id="lastName">
+          <input name="lastName" type="text" id="lastName" placeholder="lastname" required>
         </p>    
       </fieldset>
-      <button class="register" type="submit">Register</button>
-      <button class="go-to-login" type="button">Login</button>`); 
-    }
+      <div class="row">
+        <button class="register" type="submit">Register</button> 
+      </div>`);
+      $(`.login-footer`).hide();
+      $(`.login-register`).append(`<footer class="register-footer">Already signed up <a href="#" onclick="getToLogin();">Log in to n00bz</a></footer>`)
+      // }
   }
 
+
   function getToLogin() {
-    $(`.js-register-and-login-form`).on('click', '.go-to-login', function(event) {
+   // $(`.js-register-and-login-form`).on('click', '.go-to-login', function(event) {
       console.log('the login button is workin');
       $(`.js-register-and-login-form`).html(`
       <fieldset class="sign-in">
-        <legend>Login</legend>
-        <p>
-          <label for="email">Email</label>
-          <input name="username" type="email" id="email">
-        </p>
-        <p>
-          <label for="password">Password</label>
-          <input name="password" type="password" id="password">
-        </p>
+        <legend>Log in to n00bz</legend>
+          <div>
+            <label for="email">Email</label> 
+            <input name="username" type="email" id="email" placeholder="email" required>
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input name="password" type="password" id="password" placeholder="password" required>
+          </div>
+        </div>
       </fieldset>
-      <button class="login" type="submit">Login</button>`);
-    });
+      <div class="row">
+        <button class="login" type="submit">Login</button>
+      </div>`);
+      $(`.register-footer`).hide();
+      $(`.login-register`).append(`<footer class="login-footer">You a n00b to noobz? <a href="#" onclick="registerAndOrLogin();"> Sign up now</a></footer>`);
+   // });
   }
 
   function postRegistrationOrLogin() {
@@ -89,6 +100,7 @@ function registerAndOrLogin(user) {
           dataType: "json",
           contentType: "application/json"
         })
+        $(`html`).css("background", "none");
       } else {
         console.log('something else')
         let userLoginObject = {};
@@ -115,6 +127,9 @@ function registerAndOrLogin(user) {
           dataType: "json",
           contentType: "application/json"
         })
+        $(`html`).css("background", "none");
+        showAndHideMain();
+        $('.login-register, .centered-div').hide();
       }  
     });  
   }
@@ -145,9 +160,9 @@ function getProjectFromFounder() {
   $('.js-project-form').html(`
     <fieldset class="tagline-entry">
       <label for="app-name">Your app's name</label>
-      <input type="text" name="name" id="name-value" for="app-name" placeholder="ABC app">
+      <input type="text" class="name-input" name="name" id="name-value" for="app-name" placeholder="ABC app">
       <label for="tagline-value">and tagline</label>
-      <input type="text" name="tagline" id="tagline-value" placeholder="A minimalist tool for XYZ">
+      <input type="text" class="name-input" name="tagline" id="tagline-value" placeholder="A minimalist tool for XYZ">
       <button type="button" class="form-expand">Go!</button>
     </fieldset>
   `);
@@ -453,10 +468,12 @@ function displayProjects(data) {
         </div>
       </dl>
       <form class="js-publish" role="form">
-        <fieldset>
+        <fieldset id="${data.clientProtos[index].id}">
           <legend>Status</legend>
-          <input class="js-make-public" type="checkbox" id="${data.clientProtos[index].id}" name="public" value="public">
-          <label for="${data.clientProtos[index].id}">Public</label>
+          <input class="js-make-public" type="radio" id="" name="toggle-pub-priv" value="true">
+          <label for="public">Public</label>
+          <input class="js-make-public" type="radio" id="" name="toggle-pub-priv" value="false">
+          <label for="private">Private</label>
         </fieldset>
       </form>
       `)         
@@ -478,21 +495,14 @@ function displayProjects(data) {
   fullProjectDisplay();
   publishPrototypeToFeed();
 }
-
-
 function publishPrototypeToFeed() {
+  
   $('.js-make-public').on('change', function(event) {
-    //this is for setting the boolean to true/false and just making
-    //it happen here in the client instead of playing around server side
-    //just writing an iterator (j) and assigning true or false based on even
-    //or odd numbers
-    let j = 1;
-    j++;
-    let status; 
-    j % 2 == 0 ? status = true : status = false;
-    console.log(`making the prototype public...? ${status}`)
-    let prototypeId = this.id;
+
+    let prototypeId = $(this).parent().attr('id'); //.id;
+    let status = $(this).val();
     console.log(prototypeId);
+    console.log(status);
 
     $.ajax({
       url: `${requestUrl}/${prototypeId}`, 
@@ -531,10 +541,14 @@ function getAndDisplayProjects() {
 //the same as the function() {}, and calling the first function that
 //starts the operation of the client
 
+function showAndHideMain() {
+  $('main').toggle();
+}
 
 
 $(() => {
-  registerAndOrLogin();
+  showAndHideMain();
+  //registerAndOrLogin();
   postRegistrationOrLogin();
   getToLogin();
   getProjectFromFounder();
@@ -569,7 +583,14 @@ Problems with the app you could solve:
 -you can just use it to create a prototype idea without publishing it
 -
 
+-intro page with screenshot 
+-separate out the login 
 
+-get the data I want to update
+-input.val(the actual value of the item)
+-and when submit get's click it will ping a different handler
+-don't need password recoup
+  
 
 
 */
