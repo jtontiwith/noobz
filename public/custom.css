@@ -4,14 +4,19 @@ font-family: 'Merriweather Sans', sans-serif;
 color pallet: https://color.adobe.com/Flat-UI-color-theme-2469224/
 */
 
+/* ===== color pallet ===== 
+
+#3498DB the sky blue 
+#2C3E50 the darker blue
+*/
+
 .detail-toggle {
   display: none;
 }
 
 
 
-dl:hover { 
-  background-color: #e6e6e6; 
+dl:hover {
   transition: 30ms;
   cursor: pointer;
 }
@@ -26,20 +31,48 @@ h1, h2, h3, h4, h5 {
 font-family: 'Merriweather Sans', sans-serif;
 }
 
-.name-input {
-  border: none;
+
+
+.name-input, .userstory-input {
+  
   border-color: transparent;
   height: 25px;
-  font-size: 29px;
+  font-size: 14px;
+  border: 0;
+  outline: 0;
+  background-color: #ECF0F1;
+  color: grey;
+  /*border-bottom: 1px solid black;*/
+  width: 125px;
+  /*text-align: center;*/
+  
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #979797;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #979797;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #979797;
+}
+
+
+input[name="tagline"] {
+  width: 250px;
 }
 
 .tagline-entry {
-  font-size: 29px;
+  font-size: 16px;
 }
 
 
 .app-form {
-  margin-top: 5px;
+  margin-top: 25px;
   margin-bottom: 13px;
 }
 
@@ -54,10 +87,6 @@ html {
   background-size: cover;
 
 }
- 
-body {
-  padding: 20px;
-}
 
 /* login and register modal */
 
@@ -71,6 +100,8 @@ body {
   border-top: 4px solid #3498DB;
   display: inline-block;
 }
+
+
 
 .hero-area {
   display: inline-block;
@@ -132,12 +163,12 @@ input {
 }
 
 /* Style the label to display next to the inputs */
-label {
+.reg-login-form label {
   display: none;
 }
 
 /* Style the submit button */
-button {
+.login-register button {
   background-color: #3498DB;
   color: white;
   float: right;
@@ -174,4 +205,181 @@ a {
   left: 15px;
   color: #fff;
   opacity: .5;
+}
+
+/* ===== info bar ===== */
+
+.info-bar {
+  background-color: #2C3E50;
+  height:100vh;
+}
+
+/* ===== project entry form =====*/
+
+button[type="button"], .save-proto {
+  color: white;
+  background-color: #E74C3C;
+  border-radius: 4px;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+  padding: 2px 25px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+}
+
+textarea {
+  width: 100%;
+  border-color: transparent;
+  font-size: 14px;
+  border: 0;
+  outline: 0;
+  background-color: #ECF0F1;
+  color: grey;
+}
+
+.userstory-input {
+  width: 300px;
+}
+
+button.more-userstories {
+  padding: 2px 8px;
+}
+
+input[type="checkbox"] {
+  width: auto;
+}
+
+#user-sees, #user-does {
+  width: 220px;
+  min-height: 120px;
+}
+
+#user-sees {
+  margin-bottom: -4px;
+}
+
+fieldset.sees-does {
+  padding-bottom: 15px;
+}
+
+.see-does fieldset div {
+  display: inline-block;
+  
+}
+
+
+.user-does-div:before {
+  content: " ";
+  border: 1px solid black;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: block;
+  max-width: 218px
+}
+
+button.more-screens {
+  display: block;
+  padding: 2px 8px;
+  width: 220px
+}
+
+.sees-does-block {
+  vertical-align: top;
+  font-size: 11px;
+  max-width:150px;
+  word-wrap:break-word;
+  line-height: 120%; 
+  display: inline-block;
+  background-color: #ECF0F1;
+  padding: 5px; 
+
+}
+
+.does-result:before {
+  content: " ";
+  border: 1px solid black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: block;
+  max-width: 150px;
+}
+
+.user-see-do-results {
+  overflow: scroll; 
+  width: 500px; 
+  padding: 10px;
+  vertical-align: top;
+  min-height: 305px;
+}
+
+.inner-scroller {
+  width: 10000px;
+}
+
+.sees-does-inner-wrapper {
+  margin-right: 20px;
+  min-height: 308px;
+}
+
+
+/* INFO BAR */
+
+aside {
+  color: #fff;
+}
+
+
+/* FEED */ 
+
+dl {
+  padding: 10px;
+
+}
+
+.project-name-tagline {
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 23px; 
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.project-long-desc {
+  margin-bottom: 5px;
+
+}
+
+dt.dt-tag-user-screens {
+  margin-bottom: 9px !important;
+}
+
+.detail-toggle dt {
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 19px; 
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.detail-toggle dd {
+  margin-bottom: 5px;
+}
+
+.prototype {
+  border: 1px solid black;
+}
+
+.publish-form {
+  padding: 0 10px 10px 10px;
+}
+
+.publish-form label {
+  display: none;
+}
+
+.publish-form input {
+  max-width: 25px;
+  margin-bottom: -5px;
 }

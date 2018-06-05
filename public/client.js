@@ -134,6 +134,17 @@ function registerAndOrLogin(user) {
     });  
   }
 
+
+function getToDashboard() {
+  $('h1').on('click', function(event) {
+    $(`html`).css("background", "none");
+    showAndHideMain();
+    $('.login-register, .centered-div').hide();
+  });
+  
+}
+
+
 function getUserProjects() {
   $.ajax({
     url: `/projects/${localStorage.user_id}`,
@@ -189,20 +200,18 @@ function expandFullProjectForm() {
       <fieldset class="long-desc">  
         <p>
           <label for="long-desc"></label>
-          <textarea type="text" name="long-desc" id="long-desc">
-            A longer 300-400 character description of your app
-          </textarea>
+          <textarea rows="5" placeholder=" A longer 300-400 character description of your app" name="long-desc" id="long-desc"></textarea>
         </p>
         </fiedset>
         <hr>
       <fieldset class="userstories">  
           <p>
             <label for="usPart1">I want</label>
-            <input type="text" name="usPart1" id="usPart1">
+            <input type="text" class="userstory-input" name="usPart1" id="usPart1">
             <label for="usPart2">so that</label>
-            <input type="text" name="usPart2" id="usPart2">
+            <input type="text" class="userstory-input" name="usPart2" id="usPart2">
+            <button type="button" class="more-userstories">add</button>
           </p>
-          <p><button type="button" class="more-userstories">add</button></p>
         <hr>  
         </fieldset>
         <fieldset>
@@ -212,13 +221,19 @@ function expandFullProjectForm() {
           <hr>
         </fieldset> 
         <fieldset class="sees-does">
-          <div style="display: inline-block">
-            <div style="border-bottom:1px solid black;"><textarea id="user-sees" placeholder="What the user sees..."></textarea></div>
-            <div style="margin-top: 10px;"><textarea id="user-does" placeholder="What the user does..."></textarea></div>
-            <button type="button" class="more-screens">next screen</button>
+          <div class="sees-does-outer-wrapper">
+            <div class="sees-does-inner-wrapper" style="display:inline-block;">
+              <div class="user-sees-div"><textarea id="user-sees" placeholder=" What the user sees..."></textarea></div>
+              <div class="user-does-div"><textarea id="user-does" placeholder=" What the user does..."></textarea></div>
+              <button type="button" class="more-screens">next screen</button>
+            </div>
+            <div style="display:inline-block;" class="user-see-do-results">
+              <div class="inner-scroller"></div>
+            </div>
           </div>
         </fieldset>
-        <p><button type="submit">Let's do this</button><button type="button" class="cancel">Nah, I'm good</button></p>`);
+        <hr>
+        <p><button class="save-proto" type="submit">save</button><button type="button" class="cancel">cancel</button></p>`);
       console.log('does this run?')
       addUserStoryFields();
       addSeeDoScreen();
@@ -227,6 +242,12 @@ function expandFullProjectForm() {
     }
   });
 }
+
+//<div style="border-bottom:1px solid black;"><textarea id="user-sees" placeholder="What the user sees..."></textarea></div>
+//<div style="margin-top: 10px;"><textarea id="user-does" placeholder="What the user does..."></textarea></div>
+
+
+
 
 function cancelAndClearForm() {
   $('.js-project-form').on('click', '.cancel', function(event) {
@@ -338,10 +359,10 @@ function addSeeDoScreen() {
       console.log(`userSees is ${userSees} and userDoes is ${userDoes}`);
       $('#user-sees').val('');
       $('#user-does').val('');
-      $('.sees-does').append(`
-      <div class="sees-does-block" style="display: inline-block;">
-        <div style="width:80px; border-bottom: 1px solid black;">${userSees}</div>
-        <div style="width:80px; margin-top: 10px;">${userDoes}</div>
+      $('.inner-scroller').append(`
+      <div style="display:inline-block;" class="sees-does-block">
+        <div class="sees-result">${userSees}</div>
+        <div class="does-result">${userDoes}</div>
       </div>
       `);
     } else {
@@ -453,48 +474,68 @@ function displayProjects(data) {
   -I want logged in user's to be able to see their unpublished prototypes
   -so the states are logged-in user 
 
+      <div style="display:inline-block;" class="sees-does-block">
+        <div class="sees-result">sds</div>
+        <div class="does-result">sds</div>
+      </div>
+    <dd>${data.clientProtos[index].screens}</dd>
   
-  */
+      */
   for (index in data.clientProtos) {
+    //the userstories and ux screens are stored in arrays of strings so we grab them out here
+    let projectUserstories = data.clientProtos[index].userStories.map(userstory => `<dd>${userstory}</dd>`).join(' ');
+    let projectScreens = data.clientProtos[index].screens.map(screen => {
+     return `<div style="display:inline-block;" class="sees-does-block">
+         <div class="sees-result">${screen[0]}</div>
+         <div class="does-result">${screen[1]}</div>
+      </div>`}).join(' ');
+    
     if(localStorage.user_id === data.clientProtos[index].user_id) {
     projectsArray.push(
-      `<dl class="js-client-project" id="${data.clientProtos[index].id}" style="border: 1px solid black; margin-bottom: 10px;">
-        <dt>${data.clientProtos[index].shortDesc}</dt>
-        <dt>${data.clientProtos[index].longDesc}</dt>
-        <div class="detail-toggle">    
-          <dd>${data.clientProtos[index].userStories}</dd>
-          <dd>${data.clientProtos[index].screens}</dd>
-          <dd>${data.clientProtos[index].email}</dd>
-        </div>
-      </dl>
-      <form class="js-publish" role="form">
-        <fieldset id="${data.clientProtos[index].id}">
-          <legend>Status</legend>
-          <input class="js-make-public" type="radio" id="" name="toggle-pub-priv" value="true">
-          <label for="public">Public</label>
-          <input class="js-make-public" type="radio" id="" name="toggle-pub-priv" value="false">
-          <label for="private">Private</label>
-        </fieldset>
-      </form>
-      `)         
+      `<article class="prototype" role="prototype item">
+          <dl class="js-client-project" id="${data.clientProtos[index].id}">
+          <dt class="project-name-tagline">${data.clientProtos[index].shortDesc}</dt>
+          <dt class="project-long-desc">${data.clientProtos[index].longDesc}</dt>
+          <div class="detail-toggle">    
+            <dt>User stories</dt>    
+            ${projectUserstories}
+            <dt class="dt-tag-user-screens">User screens</dt>
+            ${projectScreens}
+            <dd>${data.clientProtos[index].email}</dd>
+          </div>
+        </dl>
+        <form class="js-publish publish-form" role="form">
+          <fieldset id="${data.clientProtos[index].id}">
+            <legend>Status</legend>
+            <input class="js-make-public" type="radio" name="toggle-pub-priv" value="true"> make public
+            <label for="public">Public</label>
+            <input class="js-make-public" type="radio" name="toggle-pub-priv" value="false"> make private
+            <label for="private">Private</label>
+          </fieldset> 
+        </form>
+      </article>`)         
     } else {
     projectsArray.push(
-      `<dl class="js-client-project" id="${data.clientProtos[index].id}" style="border: 1px solid black; margin-bottom: 10px;">
-        <dt>${data.clientProtos[index].shortDesc}</dt>
-        <dt>${data.clientProtos[index].longDesc}</dt>
-        <div class="detail-toggle">    
-          <dd>${data.clientProtos[index].userStories}</dd>
-          <dd>${data.clientProtos[index].screens}</dd>
+      `<article class="prototype" role="prototype item">
+        <dl class="js-client-project" id="${data.clientProtos[index].id}">
+        <dt class="project-name-tagline">${data.clientProtos[index].shortDesc}</dt>
+        <dt class="project-long-desc">${data.clientProtos[index].longDesc}</dt>
+        <div class="detail-toggle">
+          <dt>User stories</dt>    
+          ${projectUserstories}
+          <dt class="dt-tag-user-screens">User screens</dt>
+          ${projectScreens}
           <dd>${data.clientProtos[index].email}</dd>
         </div>
-      </dl>
-      `)
+        </dl>
+      </article>`)
     }
   }
   $('.js-project-feed').html(projectsArray);
   fullProjectDisplay();
   publishPrototypeToFeed();
 }
+
 function publishPrototypeToFeed() {
   
   $('.js-make-public').on('change', function(event) {
@@ -519,7 +560,6 @@ function publishPrototypeToFeed() {
     })
   });
 }
-
 
 
 function fullProjectDisplay() {
@@ -549,6 +589,7 @@ function showAndHideMain() {
 $(() => {
   showAndHideMain();
   //registerAndOrLogin();
+  getToDashboard();
   postRegistrationOrLogin();
   getToLogin();
   getProjectFromFounder();

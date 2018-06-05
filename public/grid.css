@@ -2,7 +2,7 @@
 
 h1 {
   margin: 0 0 25px 0;
-  font-size: 2.6em;
+  font-size: 2.2em;
 
 }
 
@@ -73,16 +73,19 @@ h4 {
   line-height: 0;
 } 
 
-.half, .third, .fourth, .sixth, .two_third, .five_sixth {
+.half, .third, .fourth, .sixth, .two_third, .three_forths, .five_sixth {
   float: left;
   box-sizing: border-box;
 }
 
 .half { width: 50%; }
-.third { width: 33.3%; }
-.fourth { width: 25%; }
+/*.third { width: 33.3%; }*/
+.third { width: 5%; }
+.fourth { width: 24%; }
 .sixth { width: 16.66%; }
-.two_third { width: 66.6%; }
+/*.two_third { width: 66.6%; }*/
+.two_third { width: 95%; }
+.three_fourths { width: 74%; }
 .five_sixth { width: 83.3%; }
 
 .margin_row .half + .half,   
@@ -127,8 +130,8 @@ margin-left: 2%;
 }
 
 .margin_row .half { width: 49%; }
-.margin_row .third { width: 32%; }
+.margin_row .third { width: 24%; }
 .margin_row .fourth { width: 23.5%; }
 .margin_row .sixth { width: 15%; }
-.margin_row .two_third { width: 66%; }
+.margin_row .two_third { width: 74%; }
 .margin_row .five_sixth { width: 82.96%; }
