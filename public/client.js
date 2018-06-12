@@ -1,19 +1,71 @@
+/* Clean up and finish list
+
+Priorities:
+DONE-fix reg so works the same as signup
+-organize side bar
+  DONE-fix left column 
+  DONE-organize links
+  DONE-organize faq/modal pop
+  -fix "undefined" email or tie it to publish T/F status
+  DONE-have relevant links/text pop on form field nav
+  -change trending proto designs on feed change
+  DONE-fix the h1 it's harmless
+
+items for left sidebar
+
+-my prototypes
+-checkfeed
+-faq
+-contact 
+-summaries of what to do based on where you are clicking and links
+to full articles
+
+-social sharing bar
+
+
+  -cancel an edit
+-make feed look a little nicer
+  -make sure project opens/closes when clicking anywhere
+-transparent footer on homepage with info
+-decide to maybe separate out the feed
+  -maybe show one's own feed 
+-delete a prototype
+-make it responsive
+-little bit of refactoring
+
+Nice to haves:
+-you can't delete and or edit user stories you don't want
+-password reset
+-make it load with some fake data
+-assign radio button based on db 
+-our guarantee 
+
+*/
+
+
+
+
+
+
+
+
+
 let mvpUserStories = [];
 let seesDoes = [];
 let userProject = {};
 let requestUrl = "/projects";
 
-
+//<button class="login" type="submit">Login</button>
 //here we register and sign in a user
 function registerAndOrLogin(user) {
-  /* if(user) {
+  if(user) {
     $(`.js-register-and-login-form`).html(`
     <fieldset class="sign-in">
-      <legend>blah</legend>
-      <div class="col-25">
+      <legend>Log in to n00bz</legend>
+      <div>
         <label for="email">Email</label>
       </div>
-      <div class="col-75">
+      <div>
         <input name="username" type="email" id="email" value="${user.email}">
       </div>
       <p>
@@ -21,11 +73,15 @@ function registerAndOrLogin(user) {
         <input name="password" type="password" id="password">
       </p>
     </fieldset>
-    <button class="login" type="submit">Login</button>`);
-  } else { */
+    <div class="row">
+      <button class="login" type="submit">Login</button>
+    </div>`);
+    $(`.register-footer`).hide();
+    $(`.login-register`).append(`<footer class="login-footer">You a n00b to n00bz? <a href="#" onclick="registerAndOrLogin();"> Sign up now</a></footer>`);
+  } else { 
     $(`.js-register-and-login-form`).html(`
       <fieldset class="sign-up">
-        <legend>Sign in to n00bz</legend>
+        <legend>Sign up for n00bz</legend>
         <p>
           <label for="email">Email</label>
           <input name="email" type="email" id="email" placeholder="email" required>
@@ -47,8 +103,8 @@ function registerAndOrLogin(user) {
         <button class="register" type="submit">Register</button> 
       </div>`);
       $(`.login-footer`).hide();
-      $(`.login-register`).append(`<footer class="register-footer">Already signed up <a href="#" onclick="getToLogin();">Log in to n00bz</a></footer>`)
-      // }
+      $(`.login-register`).append(`<footer class="register-footer">Already signed up <a id="login-link" href="#" onclick="getToLogin();">Log in to n00bz</a></footer>`)
+       }
   }
 
 
@@ -72,7 +128,7 @@ function registerAndOrLogin(user) {
         <button class="login" type="submit">Login</button>
       </div>`);
       $(`.register-footer`).hide();
-      $(`.login-register`).append(`<footer class="login-footer">You a n00b to noobz? <a href="#" onclick="registerAndOrLogin();"> Sign up now</a></footer>`);
+      $(`.login-register`).append(`<footer class="login-footer">You a n00b to n00bz? <a href="#" onclick="registerAndOrLogin();"> Sign up now</a></footer>`);
    // });
   }
 
@@ -96,11 +152,12 @@ function registerAndOrLogin(user) {
           success: function(data) {
             console.log(data)
             registerAndOrLogin(data);
+            //getToLogin();
           },
           dataType: "json",
           contentType: "application/json"
         })
-        $(`html`).css("background", "none");
+        //getToLogin();
       } else {
         console.log('something else')
         let userLoginObject = {};
@@ -140,6 +197,7 @@ function getToDashboard() {
     $(`html`).css("background", "none");
     showAndHideMain();
     $('.login-register, .centered-div').hide();
+    $('.logo').remove();
   });
   
 }
@@ -198,11 +256,11 @@ function expandFullProjectForm() {
       $('.js-project-form').append(`
       <h3 class="js-name-and-tagline">${nameAndTagline}</h3>
       <fieldset class="long-desc">  
-        <p>
+        <p class="textarea-parent">
           <label for="long-desc"></label>
-          <textarea rows="5" placeholder=" A longer 300-400 character description of your app" name="long-desc" id="long-desc"></textarea>
+          <textarea id="long-desc" rows="5" placeholder=" A longer 300-400 character description of your app" name="long-desc"></textarea>
         </p>
-        </fiedset>
+        </fieldset>
         <hr>
       <fieldset class="userstories">  
           <p>
@@ -235,10 +293,11 @@ function expandFullProjectForm() {
         <hr>
         <p><button class="save-proto" type="submit">save</button><button type="button" class="cancel">cancel</button></p>`);
       console.log('does this run?')
-      addUserStoryFields();
-      addSeeDoScreen();
+      //addUserStoryFields();
+      //addSeeDoScreen();
       limitMvpUserstories();
       cancelAndClearForm();
+      showTips();
     }
   });
 }
@@ -271,7 +330,7 @@ function cancelAndClearForm() {
 let i = 0;
 
 function addUserStoryFields() {
-  $('.js-project-form').on('click', '.more-userstories', event => {
+  $(".js-project-form, .edit-form").on('click', '.more-userstories', event => {
     i++;
     console.log('yup, the add button is working');
     let userStoryPart1 = $('#usPart1').val();
@@ -283,7 +342,7 @@ function addUserStoryFields() {
     if(userStoryPart1 && userStoryPart2 !== "") {
       let fullUserStory = `<li>
       <input type="checkbox" class="selectedUserstory" id="selectedUserstory${i}" name="selectedUserstory" value="I want ${userStoryPart1} so that ${userStoryPart2}">
-      <label for="selectedUserstory${i}">I want ${userStoryPart1} so that ${userStoryPart2}</li></label>
+      <label id="added-us" for="selectedUserstory${i}">I want ${userStoryPart1} so that ${userStoryPart2}</li></label>
      </li>` 
       $('.userstory-list').append(fullUserStory);
     } else {
@@ -346,32 +405,40 @@ function limitMvpUserstories() {
   })
 }
 
+//I can continue to render the sees/does blocks in the template
+//but I have to collect them and add them to the prototype object
+//at the end in case they are edited 
 
 function addSeeDoScreen() {
-  $('.js-project-form').on('click', '.more-screens', event => {
+  $(".js-project-form, .edit-form").on('click', '.more-screens', event => {
+   //FIX THIS, we have to wait on this and get them 
+   //more in the way that the edit form does
    let userSees = $('#user-sees').val();
    let userDoes = $('#user-does').val();
     
     if(userSees && userDoes !== "") {
-      const seesDoesSubArrays = [userSees, userDoes];
-      seesDoes.push(seesDoesSubArrays);
-      userProject['screens'] = seesDoes;
+      //const seesDoesSubArrays = [userSees, userDoes];
+      //seesDoes.push(seesDoesSubArrays);
+      //userProject['screens'] = seesDoes;
       console.log(`userSees is ${userSees} and userDoes is ${userDoes}`);
       $('#user-sees').val('');
       $('#user-does').val('');
       $('.inner-scroller').append(`
       <div style="display:inline-block;" class="sees-does-block">
+        <div class="sees-result"><textarea class="user-sees-edit">${userSees}</textarea></div>
+        <div class="does-result"><textarea class="user-does-edit">${userDoes}</textarea></div>
+      </div>
+      `);
+      /* here's the older static code
+      $('.inner-scroller').append(`
+      <div style="display:inline-block;" class="sees-does-block">
         <div class="sees-result">${userSees}</div>
         <div class="does-result">${userDoes}</div>
       </div>
-      `);
+      `);*/
     } else {
       alert('You have to define what the user sees and does at each screen');
     }  
-  
-  
-  
-
   });  
 
 }
@@ -382,6 +449,22 @@ $('.js-project-form').submit(event => {
   let longProjDesc = $('#long-desc').val();
   userProject['longDesc'] = longProjDesc;
   userProject['user_id'] = localStorage.user_id;  
+  //grab all the user sees / user does screens and put them in a 
+  //multi-demensional array
+  let screens1DArray = [];
+  $('.user-sees-edit, .user-does-edit').each(function() {
+    screens1DArray.push($(this).val());
+  });
+  
+  let screens2DArray = [];
+  while(screens1DArray.length) {
+    screens2DArray.push(screens1DArray.splice(0,2));
+  }
+
+  userProject['screens'] = screens2DArray;
+
+
+
   console.log(userProject);
     //so perhaps here there is a get request to get the
     //id of the user
@@ -427,6 +510,8 @@ function addNewClientProtoToFeed() {
     dataType: "json",
     contentType: "application/json"
   });  
+  $('.general').hide();
+  $('.personal').show();
 }
 
 
@@ -447,6 +532,8 @@ function getRecentProjects(callBackFn) {
       contentType: "application/json"
   
     })
+    $('.general').show();
+    $('.personal').hide();
 }
 /*
 function displayProjects(data) {
@@ -509,10 +596,11 @@ function displayProjects(data) {
             <legend>Status</legend>
             <input class="js-make-public" type="radio" name="toggle-pub-priv" value="true"> make public
             <label for="public">Public</label>
-            <input class="js-make-public" type="radio" name="toggle-pub-priv" value="false"> make private
+            <input class="js-make-public" type="radio" name="toggle-pub-priv" value="false"> keep private
             <label for="private">Private</label>
           </fieldset> 
         </form>
+        <a class="edit-proto" data-id="${data.clientProtos[index].id}" href="#">edit</a>
       </article>`)         
     } else {
     projectsArray.push(
@@ -534,7 +622,163 @@ function displayProjects(data) {
   $('.js-project-feed').html(projectsArray);
   fullProjectDisplay();
   publishPrototypeToFeed();
+  editPrototype(data);
 }
+
+function editPrototype(savedProtos) {
+  $('.edit-proto').on('click', function(event) {
+    event.preventDefault();
+    //looping through the prototypes and finding the one that the user 
+    //wants to edit, i.e. the on with the id that matches the id they clicked
+    for(let k = 0; k < savedProtos.clientProtos.length; k++) {
+      
+      if(savedProtos.clientProtos[k].id == this.dataset.id) {
+        console.log(savedProtos.clientProtos[k]);
+        let protoToEdit = savedProtos.clientProtos[k];
+
+        userStoriesToEdit = protoToEdit.userStories.map(userStory => {
+          return `<li>
+          <input type="checkbox" class="selectedUserstory" id="selectedUserstory" name="selectedUserstory" checked>
+          <label for="selectedUserstory"><input type="text" class="userstory-input" name="usComplete" id="usComplete" value="${userStory}"></label></li>`
+        }).join(' ');
+
+        userScreensToEdit = protoToEdit.screens.map(screen => {
+          return `<div class="sees-does-inner-wrapper" style="display:inline-block;">
+            <div class="user-sees-div"><textarea class="user-sees-edit">${screen[0]}</textarea></div>
+            <div class="user-does-div"><textarea class="user-does-edit">${screen[1]}</textarea></div>
+          </div>`    
+        }).join(' ');        
+        console.log(userScreensToEdit);
+        
+        $(`#${this.dataset.id}`).html(`
+          <form class="edit-form" role="form">
+            <fieldset class="tagline-entry">
+              <label for="app-name">Your app's name</label>
+              <input type="text" class="name-input" name="name" id="name-value" for="app-name" value="${protoToEdit.shortDesc}">
+            </fieldset>
+            <fieldset class="long-desc">  
+              <p>
+                <label for="long-desc">Longer description</label>
+                <textarea rows="5" name="long-desc" id="long-desc">${protoToEdit.longDesc}</textarea>
+              </p>
+            </fieldset>
+            <hr>
+            <fieldset class="userstories">  
+              <p>
+                <label for="usPart1">I want</label>
+                <input type="text" class="userstory-input" name="usPart1" id="usPart1">
+                <label for="usPart2">so that</label>
+                <input type="text" class="userstory-input" name="usPart2" id="usPart2">
+                <button type="button" class="more-userstories">add</button>
+              </p>
+              <hr>  
+            </fieldset>
+            <fieldset>
+              <legend>Userstories - <span>pick three or four</span></legend>
+              <ul class="userstory-list">
+                ${userStoriesToEdit}
+              </ul>
+              <hr>
+            </fieldset> 
+            <fieldset class="sees-does">
+              <div class="sees-does-outer-wrapper">
+                <div class="sees-does-inner-wrapper" style="display:inline-block;">
+                  <div class="user-sees-div"><textarea id="user-sees" placeholder=" What the user sees..."></textarea></div>
+                  <div class="user-does-div"><textarea id="user-does" placeholder=" What the user does..."></textarea></div>
+                  <button type="button" class="more-screens">next screen</button>
+                </div>
+                <div style="display:inline-block;" class="user-see-do-results">
+                  <div class="inner-scroller">
+                    ${userScreensToEdit}
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+              <hr>
+              <p><button class="update-proto" type="submit">update</button><button type="button" class="cancel">cancel</button></p>         
+          </form>
+        `);
+        addUserStoryFields(); //need to bound the listener here 
+        addSeeDoScreen(); //need to bound the listener here 
+        updatePrototype();
+      } 
+    }
+    
+    console.log('we are now editing baby');
+  })
+}
+
+function updatePrototype() {
+  $('.edit-form').on('submit', function(event) {
+    event.preventDefault();
+    let updatedShortDesc = $(this).find('.name-input').val()
+    let updatedLongDesc = $(this).find('#long-desc').val() 
+    let protoToEditId = $(this).parent().attr('id');
+    console.log(protoToEditId);
+    let updatedUserStories = [];
+    //grabbing any userstories added by the use during the editing process
+    $('input[type="checkbox"]').each(function() {
+      if(this.value != 'on' && this.checked) { //not sure why it's picking up these values
+        updatedUserStories.push(this.value);
+      }
+    });
+    //grabbing userstories that may have been edited since they are populated
+    //in editable input fields, this also makes sure the checkbox associated with
+    //said text input is checked as well and if so add it to the userstories array
+    $('input[name="usComplete"]').each(function() {
+      if($(this).parent().siblings('input[type="checkbox"]').prop('checked')) { 
+        updatedUserStories.push(this.value);
+      }
+    });
+    
+    let updatedScreens1DArray = [];
+    $('.user-sees-edit, .user-does-edit').each(function() {
+      updatedScreens1DArray.push($(this).val());
+    });
+    
+    let updatedScreens2DArray = [];
+    while(updatedScreens1DArray.length) {
+      updatedScreens2DArray.push(updatedScreens1DArray.splice(0,2));
+    }
+
+    const updateObject = {
+        id: protoToEditId,
+        shortDesc: updatedShortDesc,
+        longDesc: updatedLongDesc,
+        userStories: updatedUserStories,
+        screens: updatedScreens2DArray
+    }
+
+    console.log(updateObject);
+
+    $.ajax({
+      url: `${requestUrl}/${protoToEditId}`, 
+      type: "PUT",
+      data: JSON.stringify(updateObject),
+      headers: { "Authorization": 'Bearer ' + localStorage.jwt },
+      success: function(data) { 
+        console.log(data); // Set data that comes back from the server to 'text'
+      },
+      dataType: "json",
+      contentType: "application/json"
+    })
+
+
+    
+    //let addedScreens = [];
+    //$('.user-does-edit').each(function() {
+
+      //addedScreens.push($(this).text());
+   //  });
+
+    //console.log(addedScreens);
+    console.log(updatedScreens2DArray);
+    //console.log(this);
+    console.log(updatedUserStories);
+  });
+
+}
+
 
 function publishPrototypeToFeed() {
   
@@ -585,6 +829,57 @@ function showAndHideMain() {
   $('main').toggle();
 }
 
+function  modalToggle() {
+  $('.modal-toggle').on('click', function(e) {
+    e.preventDefault();
+    console.log($(this).text());
+    if($(this).text() == 'faq') {
+      $('.modal-heading').text('FAQ');
+      $('.modal-content').html(`
+      <h2>Founder FAQ</h2>
+      <ul>
+        <li>Do I really need a rough protoype? TLDR. Yes, you do.</li>
+        <li>But what if my idea does get stolen and becomes something big then what? Ans: Great, then maybe you'll be able to sue and make a bunch of money you didn't have to earn.</li>
+       <li>I know you said it won't my idea get stolen?</li>
+        <li>what if I get sold a piece of junk?</li>
+        <li>how much?</li>ans. 10 nine dollar beers
+        <li>What can I expect?</li>
+      </ul>`);
+    } else if($(this).text() == 'about') {
+      $('.modal-heading').text('ABOUT');
+      $('.modal-content').html('<p>here is the ABOUT</p>');
+    } else {
+      $('.modal-heading').text('WHAT\'S COMMING');
+      $('.modal-content').html('<p>here is WHATs COMMING</p>');
+   
+    }
+    
+    $('.modal').toggleClass('is-visible');
+  });
+}
+
+function showTips() {
+  
+  $('#name-value, #tagline-value').on('focus', function(event) {
+    $('.tips').html('<p>Get some inspiration for a name and tagline, check out <a href="https://www.producthunt.com/" target="_blank">Product Hunt</a> or <a href="https://betalist.com/" target="_blank">BetaList</a></p>');
+  });
+
+  $('textarea#long-desc').on('focus', function(event) {
+    $('.tips').html('</p>The CEO of Stack Overflow has timeless (and concise) advice for creating a great <a href="https://www.joelonsoftware.com/2002/05/09/product-vision/" target="_blank">product vision</a></p>');
+  })
+
+  $('#usPart1, #usPart2').on('focus', function(event) {
+    $('.tips').html('<p>Writing good userstories is imperative for a product owner. Learn how or brush up with this <a href="https://www.mountaingoatsoftware.com/agile/user-stories" target="_blank">quick blog</a></p>');
+  });
+
+  $('textarea#user-sees, textarea#user-does').on('focus', function(event) {
+    $('.tips').html('</p>Getting your UX/UI flows right is critical. Let Basecamp\'s head of Product Strategy give you a quick <a href="https://signalvnoise.com/posts/1926-a-shorthand-for-designing-ui-flows" target="_blank">refresher</a></p>');
+  })
+
+}
+
+
+
 
 $(() => {
   showAndHideMain();
@@ -593,45 +888,63 @@ $(() => {
   postRegistrationOrLogin();
   getToLogin();
   getProjectFromFounder();
+  addUserStoryFields();
+  addSeeDoScreen(); // don't think this matters but hey
   expandFullProjectForm();
   getAndDisplayProjects();
+  modalToggle();
+  showTips();  
 }); 
 
 
-/* NEXT MOVES
--DONE!! - button to cancel (puts the form back to original state) 
--DONE!!! - change tagline to elicit name and tagline, have placeholder show that
-  -DONE!! -- might be able to have two fields that I sum to one on my end...good
-- DONE email field (where devs should contact you)
--in the feed show tagline, first x characters of description, and have a
-button to open up the rest
-DONE!!! -what I am trying to do it have detail hidden and show/hide based on 
-  when a user clicks the button 
-DONE-when a user hits 'let's do this' I want to take that user to their 
-dashboard and show them their prototypes
--I want a users prototypes to have a true/false field the user can toggle
-publish the the prototype to the feed
--
 
 
 
 
 
+/*
 
-Problems with the app you could solve:
--you can't edit the prototype draft after filling it out 
--you can't delete and or edit user stories you don't want
--you can just use it to create a prototype idea without publishing it
--
+setInterval(function(){ 
+  $(".bg").css("background-image", "url('/css/images/css.jpg')"); 
+}, 3000);
 
--intro page with screenshot 
--separate out the login 
+function slider(){
+  $('#cover').delay(3000).fadeOut(1000, function() {
+      $('#cover').css("background-image", "url('images/classes-cover.jpg')");
+      $('#cover').fadeIn(1000, function() {
+          $('#cover').delay(3000).fadeOut(1000, function() {
+              $('#cover').css("background-image", "url('images/contact_banner.png')");
+              $('#cover').fadeIn(1000, slider);
+          });
+      });
+  });
 
--get the data I want to update
--input.val(the actual value of the item)
--and when submit get's click it will ping a different handler
--don't need password recoup
-  
+}   
+slider();
 
+
+var imgSrcs =[
+  "images/class-banner/running-group_banner2.png",
+  "images/class-banner/running-group_banner3.png",
+  "images/class-banner/running-group_banner1.png",
+];
+
+$('#cover').delay(1000).fadeIn(1000, animateBackground());
+
+function animateBackground() {
+
+  window.setTimeout(function(){
+
+      var url = imgSrcs[imgSrcs.push(imgSrcs.shift()) - 1];
+
+      $('#cover').delay(4000).fadeOut(1000, function(){
+
+          $(this).css("background-image", "url(" + url + ")")
+
+      }).fadeIn(1000, animateBackground())
+
+  });
+}
 
 */
+
