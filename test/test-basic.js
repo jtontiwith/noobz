@@ -46,7 +46,7 @@ function generateSeesDoesScreens() {
 
 function generateClientProjectData() {
   return {
-    shortDesc: generateShortDesc(),
+    //shortDesc: generateShortDesc(),
     longDesc: generateLongDesc(),
     userStories: [generateUserstories(), generateUserstories(), generateUserstories()],
     screens: [[generateSeesDoesScreens()], [generateSeesDoesScreens()], [generateSeesDoesScreens()]] 
