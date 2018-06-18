@@ -36,7 +36,7 @@ function generateUserIds() {
 
 function generateEmailAddresses() {
   const emailAddresses = ['jtonti@gmail.com', 'fred@fred.com', 'jack@jack.com', 'bahh@whoo.com'];
-  return emailAddresses[Math.floor(Math.random() * userIds.length)];
+  return emailAddresses[Math.floor(Math.random() * emailAddresses.length)];
 }
 
 function generateLongDesc() {
