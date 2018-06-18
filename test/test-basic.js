@@ -29,6 +29,16 @@ function generateShortDesc() {
   return shortDesc[Math.floor(Math.random() * shortDesc.length)];
 }
 
+function generateUserIds() {
+  const userIds = ['5b1feb2737e334044ebbbcac', '6b1feb2737e334044ebbbcad', '7b1feb2737e334044ebbbcae', '8b1feb2737e334044ebbbcaf'];
+  return userIds[Math.floor(Math.random() * userIds.length)];
+}
+
+function generateEmailAddresses() {
+  const emailAddresses = ['jtonti@gmail.com', 'fred@fred.com', 'jack@jack.com', 'bahh@whoo.com'];
+  return emailAddresses[Math.floor(Math.random() * userIds.length)];
+}
+
 function generateLongDesc() {
   const longDesc = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.', 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.'];
   return longDesc[Math.floor(Math.random() * longDesc.length)];
@@ -46,7 +56,9 @@ function generateSeesDoesScreens() {
 
 function generateClientProjectData() {
   return {
-    //shortDesc: generateShortDesc(),
+    user_id: generateUserIds(),
+    email: generateEmailAddresses(),
+    shortDesc: generateShortDesc(),
     longDesc: generateLongDesc(),
     userStories: [generateUserstories(), generateUserstories(), generateUserstories()],
     screens: [[generateSeesDoesScreens()], [generateSeesDoesScreens()], [generateSeesDoesScreens()]] 
