@@ -55,8 +55,7 @@ function generateSeesDoesScreens() {
 }
 
 function generateClientProjectData() {
-  return {
-    user_id: generateUserIds(),
+  return { user_id: generateUserIds(),
     email: generateEmailAddresses(),
     shortDesc: generateShortDesc(),
     longDesc: generateLongDesc(),
