@@ -108,8 +108,8 @@ describe('clientProto API resource', function() {
           
           res.body.clientProtos.forEach(function(clientProto) {
             expect(clientProto).to.be.a('object');
-            //expect(clientProto).to.include.keys(
-              //'id', 'shortDesc', 'longDesc', 'userStories', 'screens');
+            expect(clientProto).to.include.keys('user_id', 'email',
+            'id', 'shortDesc', 'longDesc', 'userStories', 'screens');
           });
           resClientProto = res.body.clientProtos[0];
           return clientProto.findById(resClientProto.id);
