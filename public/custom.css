@@ -61,10 +61,9 @@ color pallet: https://color.adobe.com/Flat-UI-color-theme-2469224/
   padding-top: 11px;
 }
 
-h2 {
+.dash-logo {
   font: 19px 'Poppins', sans-serif;
   color: #ECF0F1;
-  /*text-align: center;*/
   margin: 10px 0px 0px 16px; 
   background-color: rgba(236, 240, 241, 0.35);
   display: inline;
@@ -188,9 +187,11 @@ input[name="tagline"] {
 .app-form {
   margin-top: 15px;
   margin-bottom: 13px;
-  
 }
 
+.app-form legend, .edit-form legend {
+  display: none;
+}
 
 /* full page background image */
 
@@ -263,7 +264,7 @@ li {
 
 legend {
   margin-bottom: 10px;
-  font: 600 25px 'Merriweather Sans', sans-serif;
+  font: 500 25px 'Poppins', sans-serif;;
 }
 
 /* Style inputs, select elements and textareas */
@@ -291,7 +292,7 @@ input {
   box-shadow: none;
   cursor: pointer;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: normal;
   line-height: 20px;
   padding: 6px 16px;
   position: relative;
@@ -320,6 +321,7 @@ a {
   left: 15px;
   color: #fff;
   opacity: .5;
+  font-size: 35px;
 }
 
 
@@ -327,14 +329,19 @@ a {
 
 /* ===== project entry form =====*/
 
-button[type="button"], .save-proto {
+.js-name-and-tagline {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+button[type="button"], .save-proto, .update-proto {
   color: white;
   background-color: #E74C3C;
   border-radius: 4px;
   box-shadow: none;
   cursor: pointer;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 500;
   line-height: 20px;
   padding: 2px 25px;
   position: relative;
@@ -436,6 +443,9 @@ button.more-screens {
   min-height: 308px;
 }
 
+.app-form p:last-child {
+  margin-bottom: 50px;
+}
 
 /* INFO BAR */
 
@@ -451,17 +461,28 @@ dl {
 
 }
 
+address {
+  margin: 7px 0 7px 0;
+}
+
+span.bold-wrapper {
+  font-weight: 600;
+}
+
 .project-name-tagline {
   font-family: 'Merriweather Sans', sans-serif;
   font-size: 18px; 
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 5px;
 }
 
 .project-long-desc {
   margin-bottom: 5px;
   font-size: 14px;
+  line-height: 127%;
 }
+
+
 
 dt.dt-tag-user-screens {
   margin-bottom: 9px !important;
@@ -477,16 +498,16 @@ dt.dt-tag-user-screens {
 .detail-toggle dd {
   margin-bottom: 5px;
   font-size: 14px;
+  line-height: 127%;
 }
 
 .prototype {
- 
-  
-  /*background-color: #ECF0F1;*/ 
-  
   border: 1px solid #e8e8e8;
 }
 
+.js-client-project {
+  padding-bottom: 0;
+}
 
 .prototype:hover {
   background-color: rgba(236, 240, 241, 0.4);
@@ -494,10 +515,10 @@ dt.dt-tag-user-screens {
 
 
 .publish-form {
-  padding: 0 10px 10px 10px;
+  padding: 0 0 8px 7px;
 }
 
-.publish-form label {
+.publish-form label, .publish-form  legend {
   display: none;
 }
 
@@ -505,6 +526,11 @@ dt.dt-tag-user-screens {
   max-width: 25px;
   margin-bottom: -5px;
 }
+
+.edit-proto {
+  margin: -8px 0 0 10px;
+}
+
 
 /* modal */
 
@@ -598,19 +624,38 @@ color: #777;
 }
 
 .modal-heading {
-font-size: 1.125em;
-margin: 0;
+font-size: 20px;
+font-weight: 900;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
 
+h3.modal-subhead {
+  font-size: 16px;
+  text-decoration: underline;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.modal-ul li {
+  margin-bottom: 15px;
+  padding: 10px 10px;
+  border-top: 1px solid #b3d4fc;
+  border-bottom: 1px solid #b3d4fc;
+}
+
+li > span {
+  font-weight: 600;
+}
+
+/*
 .modal-content > *:first-child {
 margin-top: 0;
 }
 
 .modal-content > *:last-child {
 margin-bottom: 0;
-}
+}*/
 /* end modal */
 
 

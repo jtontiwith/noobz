@@ -1,45 +1,47 @@
 /* Clean up and finish list
 
 Priorities:
-DONE-fix reg so works the same as signup
--organize side bar
+  DONE-fix reg so works the same as signup
+  DONE-organize side bar
   DONE-fix left column 
   DONE-organize links
   DONE-organize faq/modal pop
-  -fix "undefined" email or tie it to publish T/F status
+  DONE-fix "undefined" email or tie it to publish T/F status
   DONE-have relevant links/text pop on form field nav
-  -change trending proto designs on feed change
+  DONE-change trending proto designs on feed change
   DONE-fix the h1 it's harmless
+  DONE-summaries of what to do based on where you are clicking
+  DONE-maybe show one's own feed
+  DONE-fill out faq
+  DONE-fill out about
+  DONEish-cancel an edit
+  DONE-make feed look a little nicer
+  -delete a prototype
+  -fix tests and make it deply to heroku
+  -have the n00bz dashboard logo close/cancel the expanded form, with aleart?
+  -hide edit link
+  -add additional tests
+  -make it responsive
+ 
+  -developer FAQ
+  -correct spelling errors
 
-items for left sidebar
 
--my prototypes
--checkfeed
--faq
--contact 
--summaries of what to do based on where you are clicking and links
-to full articles
-
--social sharing bar
-
-
-  -cancel an edit
--make feed look a little nicer
-  -make sure project opens/closes when clicking anywhere
--transparent footer on homepage with info
--decide to maybe separate out the feed
-  -maybe show one's own feed 
--delete a prototype
--make it responsive
--little bit of refactoring
+   -user sees / does on displayed prototype
+  -delete a prototype
+  -little bit of refactoring
+  -fix left hand colum resize upoon feed item expand
+  DONE-fix the else if thing
 
 Nice to haves:
+-longish about with screenshots on a link from the homepage showing exping what it is
 -you can't delete and or edit user stories you don't want
 -password reset
 -make it load with some fake data
 -assign radio button based on db 
 -our guarantee 
-
+-transparent footer on homepage with info
+-make sure project opens/closes when clicking anywhere
 */
 
 
@@ -174,6 +176,7 @@ function registerAndOrLogin(user) {
             console.log(data);
             localStorage.setItem('jwt', data.authToken);  
             localStorage.setItem('user_id', data.user_id);
+            localStorage.setItem('user_email', data.email);
             //putting the ids of the user's prototype (if any)
             //into a comma separated string b/c localStorage only
             //stores strings
@@ -274,6 +277,7 @@ function expandFullProjectForm() {
         </fieldset>
         <fieldset>
           <legend>Userstories - <span>pick three or four</span></legend>
+          <p>Userstories will go here. Write a bunch, pick just a few.</p>
           <ul class="userstory-list">
           </ul>
           <hr>
@@ -449,6 +453,8 @@ $('.js-project-form').submit(event => {
   let longProjDesc = $('#long-desc').val();
   userProject['longDesc'] = longProjDesc;
   userProject['user_id'] = localStorage.user_id;  
+  userProject['email'] = localStorage.user_email;
+  console.log(userProject);
   //grab all the user sees / user does screens and put them in a 
   //multi-demensional array
   let screens1DArray = [];
@@ -462,9 +468,6 @@ $('.js-project-form').submit(event => {
   }
 
   userProject['screens'] = screens2DArray;
-
-
-
   console.log(userProject);
     //so perhaps here there is a get request to get the
     //id of the user
@@ -588,19 +591,20 @@ function displayProjects(data) {
             ${projectUserstories}
             <dt class="dt-tag-user-screens">User screens</dt>
             ${projectScreens}
-            <dd>${data.clientProtos[index].email}</dd>
+            <address class="founder-email"><span class="bold-wrapper">Founder contact:</span> ${data.clientProtos[index].email}</address>
           </div>
         </dl>
         <form class="js-publish publish-form" role="form">
           <fieldset id="${data.clientProtos[index].id}">
             <legend>Status</legend>
-            <input class="js-make-public" type="radio" name="toggle-pub-priv" value="true"> make public
+            <input class="js-make-public" type="radio" name="toggle-pub-priv" value="true"> public
             <label for="public">Public</label>
-            <input class="js-make-public" type="radio" name="toggle-pub-priv" value="false"> keep private
+            <input class="js-make-public" type="radio" name="toggle-pub-priv" value="false"> private
             <label for="private">Private</label>
           </fieldset> 
         </form>
-        <a class="edit-proto" data-id="${data.clientProtos[index].id}" href="#">edit</a>
+        <a class="edit-proto" data-id="${data.clientProtos[index].id}" href="#">edit</a> |
+        <a class="delete-proto" data-id="${data.clientProtos[index].id}" href="#">delete</a>
       </article>`)         
     } else {
     projectsArray.push(
@@ -623,6 +627,7 @@ function displayProjects(data) {
   fullProjectDisplay();
   publishPrototypeToFeed();
   editPrototype(data);
+  deletePrototype();
 }
 
 function editPrototype(savedProtos) {
@@ -701,12 +706,21 @@ function editPrototype(savedProtos) {
         addUserStoryFields(); //need to bound the listener here 
         addSeeDoScreen(); //need to bound the listener here 
         updatePrototype();
+        cancelProtoEdit();
       } 
     }
     
     console.log('we are now editing baby');
   })
 }
+
+function cancelProtoEdit() {
+  $('.edit-form').on('click', '.cancel', function(event) {
+    console.log($('.feed-subhead').text());
+    addNewClientProtoToFeed();
+  });
+}
+
 
 function updatePrototype() {
   $('.edit-form').on('submit', function(event) {
@@ -780,6 +794,32 @@ function updatePrototype() {
 }
 
 
+function deletePrototype() {
+  $('.delete-proto').on('click', function(event) {
+    event.preventDefault();
+    let protoToDeleteId = $(this).attr('data-id');
+    console.log(protoToDeleteId);
+    
+    $.ajax({
+      url: `${requestUrl}/${protoToDeleteId}`, 
+      type: "DELETE",
+      //data: JSON.stringify(updateObject),
+      headers: { "Authorization": 'Bearer ' + localStorage.jwt },
+      success: function(data) { 
+        console.log(data); // Set data that comes back from the server to 'text'
+        addNewClientProtoToFeed();  
+      },
+      dataType: "json",
+      contentType: "application/json"
+    })
+
+
+
+  });
+}
+
+
+
 function publishPrototypeToFeed() {
   
   $('.js-make-public').on('change', function(event) {
@@ -805,9 +845,8 @@ function publishPrototypeToFeed() {
   });
 }
 
-
 function fullProjectDisplay() {
-  $('.js-client-project').on('click', 'dt', function(event) {
+  $('.prototype').on('click', 'dl', function(event) {
     console.log('yep, it is working');
     $(this).parent().find('.detail-toggle').toggle();
   });
@@ -833,27 +872,38 @@ function  modalToggle() {
   $('.modal-toggle').on('click', function(e) {
     e.preventDefault();
     console.log($(this).text());
-    if($(this).text() == 'faq') {
-      $('.modal-heading').text('FAQ');
-      $('.modal-content').html(`
-      <h2>Founder FAQ</h2>
-      <ul>
-        <li>Do I really need a rough protoype? TLDR. Yes, you do.</li>
-        <li>But what if my idea does get stolen and becomes something big then what? Ans: Great, then maybe you'll be able to sue and make a bunch of money you didn't have to earn.</li>
-       <li>I know you said it won't my idea get stolen?</li>
-        <li>what if I get sold a piece of junk?</li>
-        <li>how much?</li>ans. 10 nine dollar beers
-        <li>What can I expect?</li>
-      </ul>`);
-    } else if($(this).text() == 'about') {
-      $('.modal-heading').text('ABOUT');
-      $('.modal-content').html('<p>here is the ABOUT</p>');
-    } else {
-      $('.modal-heading').text('WHAT\'S COMMING');
-      $('.modal-content').html('<p>here is WHATs COMMING</p>');
-   
+    switch ($(this).text()) {
+      case 'faq':
+        $('.modal-heading').text('FAQ');
+        $('.modal-content').html(`
+        <h3 class="modal-subhead">Founder FAQ</h3>
+        <ul class="modal-ul">
+          <li><span>Do I really need a rough protoype?</span> Most ideas for digital products fail, it's best to test your idea with an inexpensive prototype before spending a bunch of money building something closer to a final product.</li>
+          <li><span>Why do I have to fill out this silly form while referencing a few articles? Can't I just tell the n00b dev my idea?</span> No, you have to break down what's a mildly complex problem and map it thoughtfully. The better you are at that the smoother it goes.</li>
+          <li><span>What if my idea gets stolen?</span> Growing a successful digital product is all about business execution, and you can't steal that.</li>
+          <li><span>But I have the best idea ever. I just know it's gonna get stolen and the rapscallion who steals it will make millions. </span>Read <a href="https://doc4design.com/news/best-non-disclosure-agreement" target="_blank">this</a> to calm your nerves and if that doesn't work go elsewhere because n00bz is about <a href="http://ryanhoover.me/post/83426962555/why-you-should-build-your-product-in-public" target="blank">building in public</a>.</li>
+          <li><span>Why don't I just hire a real professional developer and get it done?</span> Because that'd be like hiring an F1 mechanic to help you change a tire.</li>
+          <li><span>What if I get sold a piece of junk?</span> We ensure n00b developers build your prototype to our minimum specs, and we are launching a revision service soon that will guarantee it.</li>
+        </ul>`);
+        break;
+      case 'about':
+        $('.modal-heading').text('ABOUT');
+        $('.modal-content').html(`<p>
+        n00bz serves two populations of people: non-technical founders and web developers
+        that know enough to hack something together, but are not quite formal job ready. Non-technical
+        founders get cheap prototypes (between $50 - $150 depending on scope) built and n00b developers 
+        get experience working for a client on a real product instead of just doing another tutorial,
+        a stipend, and (if deserving) a letter of recommendation.    
+        </p>`);
+        break;
+      case 'near':
+        $('.modal-heading').text('NEAR FUTURE');
+        $('.modal-content').html(`<p>
+        Right now we are just figuring out if this concept it worth a damn. If we make the
+        judgement that it is, then we can imagine having more resources for founders and developers
+        to move along their respective paths at a nice n00b rythm.     
+        </p>`);
     }
-    
     $('.modal').toggleClass('is-visible');
   });
 }

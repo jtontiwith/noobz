@@ -26,6 +26,7 @@ router.post('/login', localAuth, (req, res) => {
   //bad practice
   res.json({authToken,
     user_id: req.user.id,
+    email: req.user.email,
     prototypes_id: req.user.proto_ids
   });
   

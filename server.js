@@ -66,6 +66,7 @@ app.get('/api/protected', jwtAuth, (req, res) => {
 
 app.get('/projects', (req, res) => {
   clientProto
+    //just grabbing the documents with boolean se to "true," which indicates that it's public
     .find({published: true})
     .then(clientProtos => {
       res.json({
@@ -102,7 +103,7 @@ app.get('/projects/:id', (req, res) => {
 // THE WORKING VERSION
 app.post('/projects', jwtAuth, (req, res, next) => {
   console.log(req.body);
-  const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens', 'user_id'];
+  const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens', 'user_id', 'email'];
   for(let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if(!(field in req.body)) {  
@@ -117,7 +118,8 @@ clientProto
     longDesc: req.body.longDesc,
     userStories:req.body.userStories,
     screens: req.body.screens,
-    user_id: req.body.user_id
+    user_id: req.body.user_id,
+    email: req.body.email
   })
   .then(clientProto => {
     //res.status(201).json(clientProto.serialize())
@@ -251,6 +253,7 @@ app.put('/projects/:id', jwtAuth, (req, res) => {
       return res.status(400).send(message);
     }
   }
+  //this below is just another type of validation, common validation pattern
   if (req.params.id !== req.body.id) {
     const message = `Request path id ${req.params.id} and request body id ${req.body.id} must match`;
     console.error(message);

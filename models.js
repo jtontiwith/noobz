@@ -12,6 +12,7 @@ const clientProtoSchema = mongoose.Schema({
     //screen will be an array of subarrays of strings
     screens: [[String]],
     user_id: {type: String, required: true},
+    email: {type: String, required: true},
     published: {type: Boolean, default: false} 
 });
 
@@ -25,6 +26,7 @@ clientProtoSchema.methods.serialize = function() {
         userStories: this.userStories,
         screens: this.screens,
         user_id: this.user_id,
+        email: this.email,
         published: this.published
     };
 }
