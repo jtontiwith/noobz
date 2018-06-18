@@ -71,6 +71,8 @@ function tearDownDb() {
 }
 
 describe('clientProto API resource', function() {
+  this.timeout(5000);
+
   before(function() {
     return runServer(TEST_DATABASE_URL);
   });
