@@ -100,11 +100,12 @@ describe('clientProto API resource', function() {
       let res; //<- to have access across all .then blocks
       return chai.request(app)
         .get('/projects')
-        .then(function(res) {
+        .then(function(_res) {
+          res = _res;
           expect(res).to.have.status(200);
           expect(res).to.be.json;
           expect(res.body.clientProtos).to.be.a('array');
-          //expect(res.body.clientProtos).to.have.lengthOf.at.least(1);
+          expect(res.body.clientProtos).to.have.lengthOf.at.least(1);
           
           res.body.clientProtos.forEach(function(clientProto) {
             expect(clientProto).to.be.a('object');
@@ -134,7 +135,7 @@ describe('clientProto API resource', function() {
         .post('/projects')
         .send(newClientProto)
         .then(function(res) {
-          //expect(res).to.have.status(201);
+          expect(res).to.have.status(201);
           expect(res).to.be.json;
           expect(res.body).to.be.a('object'); 
           expect(res.body).to.include.keys(
