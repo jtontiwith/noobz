@@ -16,7 +16,7 @@ Priorities:
   DONE-fill out about
   DONEish-cancel an edit
   DONE-make feed look a little nicer
-  -delete a prototype
+  DONE-delete a prototype
   -fix tests and make it deply to heroku
   -have the n00bz dashboard logo close/cancel the expanded form, with aleart?
   -hide edit link
@@ -772,6 +772,7 @@ function updatePrototype() {
       headers: { "Authorization": 'Bearer ' + localStorage.jwt },
       success: function(data) { 
         console.log(data); // Set data that comes back from the server to 'text'
+        addNewClientProtoToFeed();
       },
       dataType: "json",
       contentType: "application/json"
@@ -800,20 +801,22 @@ function deletePrototype() {
     let protoToDeleteId = $(this).attr('data-id');
     console.log(protoToDeleteId);
     
-    $.ajax({
-      url: `${requestUrl}/${protoToDeleteId}`, 
-      type: "DELETE",
-      //data: JSON.stringify(updateObject),
-      headers: { "Authorization": 'Bearer ' + localStorage.jwt },
-      success: function(data) { 
-        console.log(data); // Set data that comes back from the server to 'text'
-        addNewClientProtoToFeed();  
-      },
-      dataType: "json",
-      contentType: "application/json"
-    })
+    let answer = confirm("Delete this prototype design forever?");
 
-
+    if(answer) {
+      $.ajax({
+        url: `${requestUrl}/${protoToDeleteId}`, 
+        type: "DELETE",
+        //data: JSON.stringify(updateObject),
+        headers: { "Authorization": 'Bearer ' + localStorage.jwt },
+        success: function(data) { 
+          console.log(data); // Set data that comes back from the server to 'text'
+          addNewClientProtoToFeed();  
+        },
+        dataType: "json",
+        contentType: "application/json"
+      });
+    }
 
   });
 }
