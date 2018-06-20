@@ -50,3 +50,4 @@ If you are in the population of up and coming software developers (you can hack 
 
 * Prototype concept design editor
 * Publish your prototype designs to a public feed so that n00b devs contact you to start building it
+* Dynamic list of curated resources (that are super concise) to help you design your prototype concept
