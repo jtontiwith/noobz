@@ -20,7 +20,8 @@ If you are in the population of up and coming software developers (you can hack 
 
 
 ### Landing
-![Image of Landing](https://github.com/jtontiwith/RRscheduler/blob/master/screenshots/R_R_Scheduler_Landing.png)
+![image](https://user-images.githubusercontent.com/9849990/41680428-15223b42-7497-11e8-856b-ff502e6835b9.png)
+
 
 ### Adding Responsibilities
 ![Image of Landing](https://github.com/jtontiwith/RRscheduler/blob/master/screenshots/R_R_Scheduler_TaskAdd.png)
