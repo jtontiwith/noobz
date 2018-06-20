@@ -142,7 +142,7 @@ h1 {
 
 
 
-.name-input, .userstory-input {
+.name-input, .userstory-input, .tagline-input {
   
   border-color: transparent;
   height: 25px;
@@ -207,11 +207,9 @@ html {
 /* login and register modal */
 
 .login-register {
-  width: 100%;
+  
   max-width: 400px;
-  /*float: right;*/
-  /*margin-right: 50px;*/
-  /*margin-top: 100px;*/
+  width: 100%;
   border-radius: 1px;
   background-color: #FFF;
   border-top: 4px solid #3498DB;
@@ -241,6 +239,7 @@ html {
   color: #fff;
   font-size: 20px;
   max-width:300px;
+  width: 100%;
   word-wrap:break-word;
   line-height: 120%; 
   text-align: left;
@@ -428,23 +427,31 @@ button.more-screens {
 
 .user-see-do-results {
   overflow: scroll; 
-  width: 500px; 
+  width: 600px; 
   padding: 10px;
   vertical-align: top;
   min-height: 305px;
+  display: inline-block;
 }
 
-.inner-scroller {
+
+#inner-scroller {
   width: 10000px;
 }
+
 
 .sees-does-inner-wrapper {
   margin-right: 20px;
   min-height: 308px;
+  display: inline-block;
 }
 
 .app-form p:last-child {
   margin-bottom: 50px;
+}
+
+p.textarea-parent {
+  margin-bottom: 5px !important;
 }
 
 /* INFO BAR */
@@ -578,10 +585,12 @@ transition-delay: 0s;
 .modal-wrapper {
 position: absolute;
 z-index: 9999;
-top: 6em;
-left: 50%;
-width: 32em;
-margin-left: -16em;
+top: 6em; 
+/*left: 50%;*/
+/*width: 32em;*/
+/*margin-left: -16em;*/
+width: 60%;
+margin-left: 20%;
 background-color: #fff;
 box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
 }
@@ -691,6 +700,8 @@ margin-bottom: 0;
     width: 90%;
     margin: 10px auto 10px auto;
   }
+  
+  
 
   /*
   .menu-links {
@@ -734,14 +745,71 @@ margin-bottom: 0;
   margin: 0 auto;
 }
 
-
-
-footer {
+.social-footer {
   display: none;
 }
 
+.sees-does-inner-wrapper {
+  display: block;
+  margin-right: 0px;
+}
+
+#user-sees, #user-does {
+  width: 100%;
+}
+
+.user-does-div:before {
+  
+}
+
 
 }
+
+@media only screen and (max-width: 1081px) {
+  .user-see-do-results {
+    width: 500px;
+  }
+}
+
+@media only screen and (max-width: 955px) {
+  .user-see-do-results {
+    width: 400px;
+  }
+}
+
+@media only screen and (max-width: 831px) {
+  .user-see-do-results {
+    width: 300px;
+  }
+}
+
+@media only screen and (max-width: 880px) { 
+
+  .tagline-entry span {
+    display: table;
+    width: 95%
+  }
+
+  label[for="app-name"], label[for="tagline-value"] {
+    display:table-cell;
+    width: 170px;
+  }
+
+  .name-input, input[name="tagline"] {
+    display:table-cell; 
+    width:100%;
+    margin-left: 15px;
+  }
+
+}
+
+@media only screen and (max-width: 920px) {
+  .userstory-input {
+    display: block;
+    width: 100%;
+  }
+}
+
 
 @media only screen and (max-width: 430px) { 
   .fa {
@@ -773,11 +841,65 @@ footer {
 
   */
 
-
-
+  
 
 
 }
 
 
+@media only screen and (max-width: 768px) { 
+  .user-see-do-results {
+    width: 650px;
+  }
+}
 
+@media only screen and (max-width: 668px) { 
+  .user-see-do-results {
+    width: 550px;
+  }
+}
+
+@media only screen and (max-width: 568px) { 
+  .user-see-do-results {
+    width: 450px;
+  }
+
+  .name-input, input[name="tagline"] {
+    display: block;
+    margin-left: 0px;
+  }
+
+  label[for="app-name"], label[for="tagline-value"] {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+}
+
+@media only screen and (max-width: 468px) { 
+  .user-see-do-results {
+    width: 350px;
+  }
+
+}
+
+
+
+
+@media only screen and (max-width: 368px) { 
+  .user-see-do-results {
+    width: 300px;
+  }
+
+  .fa {
+    font-size: 34px;
+    margin-right: 0;
+  }
+
+  .fa-icon-subhead {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+}

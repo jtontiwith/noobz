@@ -6,16 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://use.fontawesome.com/e81d1348c3.js"></script>
 <title>Title of the document</title>
-<!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">-->
-
-<!--<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans|Poppins" rel="stylesheet">-->
 <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700,800|Poppins:400,500,600,700,800" rel="stylesheet">
 <link rel="stylesheet" href="grid.css">
 <link rel="stylesheet" href="custom.css">
 </head>
 
 <body>
-  <h1 class="logo">n00bz</h1>
+  <!--LOGO-->
+  <h1 class="logo">n00bz<span class="back-to-dash"></span></h1>
   
   <!--THE HERO AREA-->
   <div class="row centered-div">
@@ -32,57 +30,30 @@
     </div>
   </div>
   
-  <!--SIDE MENU AND MAIN CONTENT AREA WITH FEED-->
-
   <main class="row" role="main">
-      <aside class="info-bar">
-        <!--<div class="dash-logo-background">
-          <h2 class="dash-logo">n00bz</h2>
-          <p class="subhead">WORKSPACE</p>  
-        </div>-->
-        <!--<div class="dash-logo-background">-->
-          <h2 class="dash-logo">n00bz</h2>
-          <!--<p class="subhead">WORKSPACE</p>-->  
-        <!--</div>-->
-        <ul class="menu-links">
-          <li><a href="#" onclick="addNewClientProtoToFeed()">prototypes</a></li>
-          <li><a href="#" onclick="getAndDisplayProjects()">feed</a></li>
-          <li><a href="#" class="modal-toggle">faq</a></li>
-          <li><a href="#" class="modal-toggle">about</a></li>
-          <li><a href="#" class="modal-toggle">near</a></li>
-        </ul>
-        <section class="tips">
-          </p>Refer to the handpicked / concise resources here while designing. Rely heavily on them unless you're an experienced
-              Product Manager/Designer.</p>
-        </section>
-        <footer>
-          <i class="fa fa-twitter-square"></i>
-          <i class="fa fa-reddit-square"></i>
-          <i class="fa fa-facebook-square"></i>
-        </footer>
-        <!--  
-        <section>
-            <h2>Founder FAQ</h2>
-            <ul>
-              <li>Do I really need a rough protoype? TLDR. Yes, you do.</li>
-              <li>But what if my idea does get stolen and becomes something big then what? Ans: Great, then maybe you'll be able to sue and make a bunch of money you didn't have to earn.</li>
-             <li>I know you said it won't my idea get stolen?</li>
-              <li>what if I get sold a piece of junk?</li>
-              <li>how much?</li>ans. 10 nine dollar beers
-              <li>What can I expect?</li>
-            </ul>
-          </section>
-          <section>
-            <h2>Developer FAQ</h2>
-            <ul>
-              <li>Why do this?</li>
-              <li>Shouldn't I get paid more?</li>
-              <li>What's the value prop for the developer (aspiring dev is what it really is)</li>
-              <li>Why the X day turnaround and only one at a time?</li>
-            </ul>
-          </section>
-          -->
-        </aside>
+    <!--SIDE MENU-->
+    <aside class="info-bar">
+      <h2 class="dash-logo">n00bz</h2>
+      <ul class="menu-links">
+        <li><a href="#" onclick="addNewClientProtoToFeed()">prototypes</a></li>
+        <li><a href="#" onclick="getAndDisplayProjects()">feed</a></li>
+        <li><a href="#" class="modal-toggle">about</a></li>
+        <li><a href="#" class="modal-toggle">faq</a></li>
+        <li><a href="#" onclick="logOut()">logout</a></li>
+        <!--<li><a href="#" class="modal-toggle">near</a></li>-->
+      </ul>
+      <section class="tips">
+        </p>Refer to the handpicked / concise resources here while designing. Rely heavily on them unless you're an experienced
+            Product Manager/Designer.</p>
+      </section>
+      <footer class="social-footer">
+        <i class="fa fa-twitter-square"></i>
+        <i class="fa fa-reddit-square"></i>
+        <i class="fa fa-facebook-square"></i>
+      </footer>
+    </aside>
+    
+    <!--FEED AND MAIN FORM / FEATURE-->
     <section class="feed">
       <form class="js-project-form app-form" role="form">
       </form>
@@ -93,7 +64,9 @@
       <section class="js-personal-feed">  
       </section> 
     </section>
-  <!--<div class="some-div"></div>-->
+    
+    <!--MODAL-->
+    
     <svg display="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="768" height="800" viewBox="0 0 768 800"><defs><g id="icon-close"><path class="path1" d="M31.708 25.708c-0-0-0-0-0-0l-9.708-9.708 9.708-9.708c0-0 0-0 0-0 0.105-0.105 0.18-0.227 0.229-0.357 0.133-0.356 0.057-0.771-0.229-1.057l-4.586-4.586c-0.286-0.286-0.702-0.361-1.057-0.229-0.13 0.048-0.252 0.124-0.357 0.228 0 0-0 0-0 0l-9.708 9.708-9.708-9.708c-0-0-0-0-0-0-0.105-0.104-0.227-0.18-0.357-0.228-0.356-0.133-0.771-0.057-1.057 0.229l-4.586 4.586c-0.286 0.286-0.361 0.702-0.229 1.057 0.049 0.13 0.124 0.252 0.229 0.357 0 0 0 0 0 0l9.708 9.708-9.708 9.708c-0 0-0 0-0 0-0.104 0.105-0.18 0.227-0.229 0.357-0.133 0.355-0.057 0.771 0.229 1.057l4.586 4.586c0.286 0.286 0.702 0.361 1.057 0.229 0.13-0.049 0.252-0.124 0.357-0.229 0-0 0-0 0-0l9.708-9.708 9.708 9.708c0 0 0 0 0 0 0.105 0.105 0.227 0.18 0.357 0.229 0.356 0.133 0.771 0.057 1.057-0.229l4.586-4.586c0.286-0.286 0.362-0.702 0.229-1.057-0.049-0.13-0.124-0.252-0.229-0.357z"></path></g></defs></svg> 
     <div class="modal">
       <div class="modal-overlay modal-toggle"></div>
@@ -104,19 +77,13 @@
         </div>
         <div class="modal-body">
           <div class="modal-content">
-            
             <button class="modal-toggle">Close</button>
           </div>
         </div>
       </div>
     </div> 
-
   </main>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="client.js"></script>
 </body>
-
-
 </html>

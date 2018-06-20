@@ -1,57 +1,3 @@
-/* Clean up and finish list
-
-Priorities:
-  DONE-fix reg so works the same as signup
-  DONE-organize side bar
-  DONE-fix left column 
-  DONE-organize links
-  DONE-organize faq/modal pop
-  DONE-fix "undefined" email or tie it to publish T/F status
-  DONE-have relevant links/text pop on form field nav
-  DONE-change trending proto designs on feed change
-  DONE-fix the h1 it's harmless
-  DONE-summaries of what to do based on where you are clicking
-  DONE-maybe show one's own feed
-  DONE-fill out faq
-  DONE-fill out about
-  DONEish-cancel an edit
-  DONE-make feed look a little nicer
-  DONE-delete a prototype
-  -fix tests and make it deply to heroku
-  -have the n00bz dashboard logo close/cancel the expanded form, with aleart?
-  -hide edit link
-  -add additional tests
-  -make it responsive
- 
-  -developer FAQ
-  -correct spelling errors
-
-
-   -user sees / does on displayed prototype
-  -delete a prototype
-  -little bit of refactoring
-  -fix left hand colum resize upoon feed item expand
-  DONE-fix the else if thing
-
-Nice to haves:
--longish about with screenshots on a link from the homepage showing exping what it is
--you can't delete and or edit user stories you don't want
--password reset
--make it load with some fake data
--assign radio button based on db 
--our guarantee 
--transparent footer on homepage with info
--make sure project opens/closes when clicking anywhere
-*/
-
-
-
-
-
-
-
-
-
 let mvpUserStories = [];
 let seesDoes = [];
 let userProject = {};
@@ -109,103 +55,112 @@ function registerAndOrLogin(user) {
        }
   }
 
-
+  //pop the login form
   function getToLogin() {
-   // $(`.js-register-and-login-form`).on('click', '.go-to-login', function(event) {
-      console.log('the login button is workin');
-      $(`.js-register-and-login-form`).html(`
-      <fieldset class="sign-in">
-        <legend>Log in to n00bz</legend>
-          <div>
-            <label for="email">Email</label> 
-            <input name="username" type="email" id="email" placeholder="email" required>
-          </div>
-          <div>
-            <label for="password">Password</label>
-            <input name="password" type="password" id="password" placeholder="password" required>
-          </div>
+    console.log('the login button is workin');
+    $(`.js-register-and-login-form`).html(`
+    <fieldset class="sign-in">
+      <legend>Log in to n00bz</legend>
+        <div>
+          <label for="email">Email</label> 
+          <input name="username" type="email" id="email" placeholder="email" required>
         </div>
-      </fieldset>
-      <div class="row">
-        <button class="login" type="submit">Login</button>
-      </div>`);
-      $(`.register-footer`).hide();
-      $(`.login-register`).append(`<footer class="login-footer">You a n00b to n00bz? <a href="#" onclick="registerAndOrLogin();"> Sign up now</a></footer>`);
-   // });
+        <div>
+          <label for="password">Password</label>
+          <input name="password" type="password" id="password" placeholder="password" required>
+        </div>
+      </div>
+    </fieldset>
+    <div class="row">
+      <button class="login" type="submit">Login</button>
+    </div>`);
+    $(`.register-footer`).hide();
+    $(`.login-register`).append(`<footer class="login-footer">You a n00b to n00bz? <a href="#" onclick="registerAndOrLogin();"> Sign up now</a></footer>`);
   }
 
-  function postRegistrationOrLogin() {
-    $(`.js-register-and-login-form`).on('submit', function(event) {
-      event.preventDefault();
-      let formArray = $(this).serializeArray();
+//here we register or login a user depending on what they are doing
+function postRegistrationOrLogin() {
+  $(`.js-register-and-login-form`).on('submit', function(event) {
+    event.preventDefault();
+    let formArray = $(this).serializeArray();
+    
+    if(formArray.length === 4) {
+      let userRegObject = {};
       
-      if(formArray.length === 4) {
-        let userRegObject = {};
-        
-        for(let i = 0; i < formArray.length; i++) {
-          userRegObject[formArray[i].name] = formArray[i]['value'];
-        }
-        console.log(userRegObject);
-        
-        $.ajax({
-          url: "/api/users",
-          type: "POST",
-          data: JSON.stringify(userRegObject),
-          success: function(data) {
-            console.log(data)
-            registerAndOrLogin(data);
-            //getToLogin();
-          },
-          dataType: "json",
-          contentType: "application/json"
-        })
-        //getToLogin();
-      } else {
-        console.log('something else')
-        let userLoginObject = {};
-        for(let i = 0; i < formArray.length; i++) {
-          userLoginObject[formArray[i].name] = formArray[i]['value'];
-        }
-        console.log(userLoginObject);
-        
-        $.ajax({
-          url: "/api/auth/login",
-          type: "POST",
-          data: JSON.stringify(userLoginObject),
-          success: function(data) {
-            console.log(data);
-            localStorage.setItem('jwt', data.authToken);  
-            localStorage.setItem('user_id', data.user_id);
-            localStorage.setItem('user_email', data.email);
-            //putting the ids of the user's prototype (if any)
-            //into a comma separated string b/c localStorage only
-            //stores strings
-            let protoString = data.prototypes_id.join();  
-            localStorage.setItem('prototype_ids', protoString);
-            
-          },
-          dataType: "json",
-          contentType: "application/json"
-        })
-        $(`html`).css("background", "none");
-        showAndHideMain();
-        $('.login-register, .centered-div').hide();
-      }  
-    });  
-  }
-
-
-function getToDashboard() {
-  $('h1').on('click', function(event) {
-    $(`html`).css("background", "none");
-    showAndHideMain();
-    $('.login-register, .centered-div').hide();
-    $('.logo').remove();
-  });
-  
+      for(let i = 0; i < formArray.length; i++) {
+        userRegObject[formArray[i].name] = formArray[i]['value'];
+      }
+      console.log(userRegObject);
+      
+      $.ajax({
+        url: "/api/users",
+        type: "POST",
+        data: JSON.stringify(userRegObject),
+        success: function(data) {
+          console.log(data)
+          registerAndOrLogin(data);
+          //getToLogin();
+        },
+        dataType: "json",
+        contentType: "application/json"
+      })
+      //getToLogin();
+    } else {
+      console.log('something else')
+      let userLoginObject = {};
+      for(let i = 0; i < formArray.length; i++) {
+        userLoginObject[formArray[i].name] = formArray[i]['value'];
+      }
+      console.log(userLoginObject);
+      
+      $.ajax({
+        url: "/api/auth/login",
+        type: "POST",
+        data: JSON.stringify(userLoginObject),
+        success: function(data) {
+          console.log(data);
+          localStorage.setItem('jwt', data.authToken);  
+          localStorage.setItem('user_id', data.user_id);
+          localStorage.setItem('user_email', data.email);
+          //putting the ids of the user's prototype (if any)
+          //into a comma separated string b/c localStorage only
+          //stores strings
+          let protoString = data.prototypes_id.join();  
+          localStorage.setItem('prototype_ids', protoString);
+          
+        },
+        dataType: "json",
+        contentType: "application/json"
+      })
+      $(`html`).css("background", "none");
+      showAndHideMain();
+      $('.login-register, .centered-div').hide();
+    }  
+  });  
 }
 
+//if the user refreshes the SPA and themself back at the first screen
+//we allow them to get back to their dashboard by clicking on the h1
+function getToDashboard() {
+  $('h1').on('click', function(event) {
+    if(localStorage.user_id) {
+      $(`html`).css("background", "none");
+      showAndHideMain();
+      $('.login-register, .centered-div').hide();
+      $('.logo').remove();
+    }
+  });
+}
 
+//we also swap the text to the h1 to let them know it's a way
+//to get back to their dashboard
+function showBackToDash() {
+  if(localStorage.user_id) {
+    $('h1').text('n00bz Dashboard');
+  }
+}
+
+//make the call to get a user's prototype projects
 function getUserProjects() {
   $.ajax({
     url: `/projects/${localStorage.user_id}`,
@@ -220,27 +175,25 @@ function getUserProjects() {
   })
 }
 
-//
-
-
-
-//here we pop an input field that ask the user to enter a descriptive
-//tagline for their app that's suppose to interest someone in knowing
-//more about it
+/* HERE STARTS THE MAIN FORM/FEATURE OF THE APP */
+//here we pop an input field that ask the user to enter a name and 
+//descriptive tagline for their app
 
 function getProjectFromFounder() {
   $('.js-project-form').html(`
     <fieldset class="tagline-entry">
-      <label for="app-name">Your app's name</label>
-      <input type="text" class="name-input" name="name" id="name-value" for="app-name" placeholder="ABC app">
-      <label for="tagline-value">and tagline</label>
-      <input type="text" class="name-input" name="tagline" id="tagline-value" placeholder="A minimalist tool for XYZ">
+      <span>
+        <label for="app-name">Your app's name</label>
+        <input type="text" class="name-input" name="name" id="name-value" for="app-name" placeholder="ABC app">
+      </span>
+      <span>
+        <label for="tagline-value">and tagline</label>
+        <input type="text" class="tagline-input" name="tagline" id="tagline-value" placeholder="A minimalist tool for XYZ">
+      </span>
       <button type="button" class="form-expand">Go!</button>
     </fieldset>
   `);
 }
-  
-
  
 //after the user fills out their tagline they pop a longer 
 //form to provide the info necessary to create an MVP
@@ -284,13 +237,13 @@ function expandFullProjectForm() {
         </fieldset> 
         <fieldset class="sees-does">
           <div class="sees-does-outer-wrapper">
-            <div class="sees-does-inner-wrapper" style="display:inline-block;">
+            <div class="sees-does-inner-wrapper">
               <div class="user-sees-div"><textarea id="user-sees" placeholder=" What the user sees..."></textarea></div>
               <div class="user-does-div"><textarea id="user-does" placeholder=" What the user does..."></textarea></div>
               <button type="button" class="more-screens">next screen</button>
             </div>
             <div style="display:inline-block;" class="user-see-do-results">
-              <div class="inner-scroller"></div>
+              <div id="inner-scroller"></div>
             </div>
           </div>
         </fieldset>
@@ -306,28 +259,14 @@ function expandFullProjectForm() {
   });
 }
 
-//<div style="border-bottom:1px solid black;"><textarea id="user-sees" placeholder="What the user sees..."></textarea></div>
-//<div style="margin-top: 10px;"><textarea id="user-does" placeholder="What the user does..."></textarea></div>
-
-
-
-
+//here's the UX flow when a use cancels the prototype design form
 function cancelAndClearForm() {
   $('.js-project-form').on('click', '.cancel', function(event) {
     console.log('cancel button is registering');
-    //$(this).parent().parent().parent().find('.js-name-and-tagline').remove(); 
-    //$(this).closest('form').find('.js-name-and-tagline').remove();
-    //$(this).closest('form').find('.userstory-list').remove();
-    //$(this).closest('form').find('.sees-does-block').remove();
-    //$(this).closest('form').empty();
-    //I am leaving in this commented code above to remind me what not
-    //to do, and because I might be able to reuse some of it to make 
-    //button that remove individual userstories or screens 
     getProjectFromFounder();
 
   });
 }
-
 
 //here we append more fields for userstories if the user 
 //wants to append more
@@ -339,9 +278,6 @@ function addUserStoryFields() {
     console.log('yup, the add button is working');
     let userStoryPart1 = $('#usPart1').val();
     let userStoryPart2 = $('#usPart2').val();
-    
-    
-    //let fullUserStory = `<li>I want ${userStoryPart1} so that ${userStoryPart2}</li>`;
     //form validation
     if(userStoryPart1 && userStoryPart2 !== "") {
       let fullUserStory = `<li>
@@ -355,12 +291,10 @@ function addUserStoryFields() {
     
     $('#usPart1').val('');
     $('#usPart2').val('');
-    //let userStoryPart1 = $(event.currentTarget).find('#usPart1').val();
   });
 }
 
-//touch on this with Luis
-//is it that you run this on each one of them uniquely by feeding it in an parameter  
+//limiting the number of userstories a user can actually select
 function limitMvpUserstories() {
   $(`.userstory-list`).on('change', 'input', function(event) {
     console.log(this);
@@ -375,71 +309,32 @@ function limitMvpUserstories() {
     } else {
       alert('you can only have 3 mvp userstories');
       $(this).prop('checked', false);
-      //alert('you can only have 3 mvp userstories');
-      //checkedUserstories.each(function(item) {
-        //$(this).prop('checked', false);
-             
-      //})
-      
     }
-
-    /*
-    mvpUserStories = [];
-    checkedUserstories.each(function(item) {
-      console.log(checkedUserstories.length);
-      mvpUserStories.push($(this).val());
-      
-
-    })
-*/
-
-    console.log(checkedUserstories);
     
-    //mvpUserStories.push(checkedUserstories);
+    console.log(checkedUserstories);
     console.log(mvpUserStories);
     userProject['userStories'] = mvpUserStories;
     console.log(userProject);
-
-    //const maxAllowed = 3;
-    //let count = $(`input[name="selectedUserstory"]:checked`).length;
-    //if(count > maxAllowed) {
-      
-      //alert('You can only choose 3');
-    //}
-  })
+  });
 }
 
-//I can continue to render the sees/does blocks in the template
-//but I have to collect them and add them to the prototype object
-//at the end in case they are edited 
-
+//allow user to add another set of user sees / user does screens
 function addSeeDoScreen() {
   $(".js-project-form, .edit-form").on('click', '.more-screens', event => {
-   //FIX THIS, we have to wait on this and get them 
-   //more in the way that the edit form does
-   let userSees = $('#user-sees').val();
-   let userDoes = $('#user-does').val();
+
+    let userSees = $('#user-sees').val();
+    let userDoes = $('#user-does').val();
     
     if(userSees && userDoes !== "") {
-      //const seesDoesSubArrays = [userSees, userDoes];
-      //seesDoes.push(seesDoesSubArrays);
-      //userProject['screens'] = seesDoes;
       console.log(`userSees is ${userSees} and userDoes is ${userDoes}`);
       $('#user-sees').val('');
       $('#user-does').val('');
-      $('.inner-scroller').append(`
+      $('#inner-scroller').append(`
       <div style="display:inline-block;" class="sees-does-block">
         <div class="sees-result"><textarea class="user-sees-edit">${userSees}</textarea></div>
         <div class="does-result"><textarea class="user-does-edit">${userDoes}</textarea></div>
       </div>
       `);
-      /* here's the older static code
-      $('.inner-scroller').append(`
-      <div style="display:inline-block;" class="sees-does-block">
-        <div class="sees-result">${userSees}</div>
-        <div class="does-result">${userDoes}</div>
-      </div>
-      `);*/
     } else {
       alert('You have to define what the user sees and does at each screen');
     }  
@@ -447,7 +342,7 @@ function addSeeDoScreen() {
 
 }
 
-
+//submit the prototype design to save in the db!
 $('.js-project-form').submit(event => {
   event.preventDefault();
   let longProjDesc = $('#long-desc').val();
@@ -469,8 +364,6 @@ $('.js-project-form').submit(event => {
 
   userProject['screens'] = screens2DArray;
   console.log(userProject);
-    //so perhaps here there is a get request to get the
-    //id of the user
 
     $.ajax({
       url: requestUrl,
@@ -487,7 +380,6 @@ $('.js-project-form').submit(event => {
           this.reset();
         });
       },
-      //success: postCallback(data),
       dataType: "json",
       contentType: "application/json"
     });
@@ -495,20 +387,17 @@ $('.js-project-form').submit(event => {
     getProjectFromFounder();
 });
 
+//get the list of the user's prototype designs so they can see
+//what they just saved
 function addNewClientProtoToFeed() {
   const urlWithID = `${requestUrl}/${localStorage.user_id}`;
-
   $.ajax({
     url: urlWithID,
     type: "GET",
     success: function(data) { 
       console.log('here is the response from getById!');
-      console.log(data); // Set data that comes back from the server to 'text'
-      //How can I make this use existing infrastructure?
+      console.log(data); 
       displayProjects(data);
-      //$('.js-project-feed').hide();
-      //$('.js-personal-feed').html(
-      //  '<p>' + data.shortDesc + '</p>');
     },
     dataType: "json",
     contentType: "application/json"
@@ -517,60 +406,27 @@ function addNewClientProtoToFeed() {
   $('.personal').show();
 }
 
-
-//here the callback is received and put within a setTimeout
-//that waits one-tenth of a second and then fires displayProjects
-//with the data
-
+//get all the prototype design projects
 function getRecentProjects(callBackFn) {
-    //setTimeout(function() {callBackFn(MOCK_PROJECTS)}, 100)
-    $.ajax({
-      url: requestUrl,
-      type: "GET",
-      success: function(data) { 
-        console.log(data); // Set data that comes back from the server to 'text'
-        callBackFn(data);
-      },
-      dataType: "json",
-      contentType: "application/json"
-  
-    })
-    $('.general').show();
-    $('.personal').hide();
-}
-/*
-function displayProjects(data) {
-    for (index in data.clientProtos) {
-        $('.js-project-feed').append(
-          `<dl class="js-client-project" style="border: 1px solid black; margin-bottom: 10px;">
-            <dt>${data.clientProtos[index].shortDesc}</dt>
-            <dt>${data.clientProtos[index].longDesc}</dt>
-            <div class="detail-toggle">    
-              <dd>${data.clientProtos[index].userStories}</dd>
-              <dd>${data.clientProtos[index].screens}</dd>
-              <dd>${data.clientProtos[index].email}</dd>
-            </div>
-          </dl>`);
-    }
-    fullProjectDisplay();
-} */
+  $.ajax({
+    url: requestUrl,
+    type: "GET",
+    success: function(data) { 
+      console.log(data); // Set data that comes back from the server to 'text'
+      callBackFn(data);
+    },
+    dataType: "json",
+    contentType: "application/json"
 
+  })
+  $('.general').show();
+  $('.personal').hide();
+}
+
+//making all the prototype design projects pretty for display
 function displayProjects(data) {
   let projectsArray = [];
-  //if data.clientProtos[index].published == false && l
-  /*
-  -I don't want all prototypes to be published to the feed automatically
-  -I want all prototypes that have "published: true" to be public to the feed
-  -I want logged in user's to be able to see their unpublished prototypes
-  -so the states are logged-in user 
 
-      <div style="display:inline-block;" class="sees-does-block">
-        <div class="sees-result">sds</div>
-        <div class="does-result">sds</div>
-      </div>
-    <dd>${data.clientProtos[index].screens}</dd>
-  
-      */
   for (index in data.clientProtos) {
     //the userstories and ux screens are stored in arrays of strings so we grab them out here
     let projectUserstories = data.clientProtos[index].userStories.map(userstory => `<dd>${userstory}</dd>`).join(' ');
@@ -579,7 +435,7 @@ function displayProjects(data) {
          <div class="sees-result">${screen[0]}</div>
          <div class="does-result">${screen[1]}</div>
       </div>`}).join(' ');
-    
+    //if the project is of the current user then show it with editing controls
     if(localStorage.user_id === data.clientProtos[index].user_id) {
     projectsArray.push(
       `<article class="prototype" role="prototype item">
@@ -630,6 +486,7 @@ function displayProjects(data) {
   deletePrototype();
 }
 
+//edit a prototype
 function editPrototype(savedProtos) {
   $('.edit-proto').on('click', function(event) {
     event.preventDefault();
@@ -692,8 +549,8 @@ function editPrototype(savedProtos) {
                   <div class="user-does-div"><textarea id="user-does" placeholder=" What the user does..."></textarea></div>
                   <button type="button" class="more-screens">next screen</button>
                 </div>
-                <div style="display:inline-block;" class="user-see-do-results">
-                  <div class="inner-scroller">
+                <div class="user-see-do-results">
+                  <div id="inner-scroller">
                     ${userScreensToEdit}
                   </div>
                 </div>
@@ -714,6 +571,7 @@ function editPrototype(savedProtos) {
   })
 }
 
+//cancel the edit
 function cancelProtoEdit() {
   $('.edit-form').on('click', '.cancel', function(event) {
     console.log($('.feed-subhead').text());
@@ -721,7 +579,7 @@ function cancelProtoEdit() {
   });
 }
 
-
+//submit the edit to update
 function updatePrototype() {
   $('.edit-form').on('submit', function(event) {
     event.preventDefault();
@@ -776,25 +634,12 @@ function updatePrototype() {
       },
       dataType: "json",
       contentType: "application/json"
-    })
-
-
-    
-    //let addedScreens = [];
-    //$('.user-does-edit').each(function() {
-
-      //addedScreens.push($(this).text());
-   //  });
-
-    //console.log(addedScreens);
-    console.log(updatedScreens2DArray);
-    //console.log(this);
-    console.log(updatedUserStories);
+    });
   });
 
 }
 
-
+//delete a doc from the db
 function deletePrototype() {
   $('.delete-proto').on('click', function(event) {
     event.preventDefault();
@@ -821,8 +666,7 @@ function deletePrototype() {
   });
 }
 
-
-
+//make a prototype public to everyone!
 function publishPrototypeToFeed() {
   
   $('.js-make-public').on('change', function(event) {
@@ -848,13 +692,13 @@ function publishPrototypeToFeed() {
   });
 }
 
+//show and hide the full prototype design 
 function fullProjectDisplay() {
   $('.prototype').on('click', 'dl', function(event) {
     console.log('yep, it is working');
     $(this).parent().find('.detail-toggle').toggle();
   });
 }
-
 
 //here we are calling getRecentProjects and passing it a callback
 //function (in this case displayProjects) as an argument 
@@ -863,14 +707,12 @@ function getAndDisplayProjects() {
     getRecentProjects(displayProjects);
 }
 
-//here we are wrapping an anonymous function, remeber that () => is
-//the same as the function() {}, and calling the first function that
-//starts the operation of the client
-
+//showin and hidin main
 function showAndHideMain() {
   $('main').toggle();
 }
 
+//modal functionality 
 function  modalToggle() {
   $('.modal-toggle').on('click', function(e) {
     e.preventDefault();
@@ -887,7 +729,13 @@ function  modalToggle() {
           <li><span>But I have the best idea ever. I just know it's gonna get stolen and the rapscallion who steals it will make millions. </span>Read <a href="https://doc4design.com/news/best-non-disclosure-agreement" target="_blank">this</a> to calm your nerves and if that doesn't work go elsewhere because n00bz is about <a href="http://ryanhoover.me/post/83426962555/why-you-should-build-your-product-in-public" target="blank">building in public</a>.</li>
           <li><span>Why don't I just hire a real professional developer and get it done?</span> Because that'd be like hiring an F1 mechanic to help you change a tire.</li>
           <li><span>What if I get sold a piece of junk?</span> We ensure n00b developers build your prototype to our minimum specs, and we are launching a revision service soon that will guarantee it.</li>
-        </ul>`);
+        </ul>
+        <h3 class="modal-subhead">Developer FAQ</h3>
+        <ul class="modal-ul">
+          <li><span>Why do this?</span> If you have done a bunch of tutorials, taken some online course, etc. and you want to start solving some real problems with code then this is for you.</li>
+          <li><span>Shouldn't I get paid more than $50-$150?</span> Yes! If your skillset is farther along that a n00b developer (someone that can hack something together, but is not job ready) then you should definitley be getting paid more, this it not for you.</li>
+        </ul>
+        `);
         break;
       case 'about':
         $('.modal-heading').text('ABOUT');
@@ -911,8 +759,8 @@ function  modalToggle() {
   });
 }
 
+//tips for the user functionality 
 function showTips() {
-  
   $('#name-value, #tagline-value').on('focus', function(event) {
     $('.tips').html('<p>Get some inspiration for a name and tagline, check out <a href="https://www.producthunt.com/" target="_blank">Product Hunt</a> or <a href="https://betalist.com/" target="_blank">BetaList</a></p>');
   });
@@ -931,73 +779,40 @@ function showTips() {
 
 }
 
-
+//logout
+function logOut() {
+  localStorage.clear();
+  location.reload();
+  console.log('you logged out');
+}
 
 
 $(() => {
   showAndHideMain();
-  //registerAndOrLogin();
   getToDashboard();
   postRegistrationOrLogin();
   getToLogin();
   getProjectFromFounder();
   addUserStoryFields();
-  addSeeDoScreen(); // don't think this matters but hey
+  addSeeDoScreen(); 
   expandFullProjectForm();
   getAndDisplayProjects();
   modalToggle();
   showTips();  
+  showBackToDash();
 }); 
 
 
 
 
-
-
-
 /*
-
-setInterval(function(){ 
-  $(".bg").css("background-image", "url('/css/images/css.jpg')"); 
-}, 3000);
-
-function slider(){
-  $('#cover').delay(3000).fadeOut(1000, function() {
-      $('#cover').css("background-image", "url('images/classes-cover.jpg')");
-      $('#cover').fadeIn(1000, function() {
-          $('#cover').delay(3000).fadeOut(1000, function() {
-              $('#cover').css("background-image", "url('images/contact_banner.png')");
-              $('#cover').fadeIn(1000, slider);
-          });
-      });
-  });
-
-}   
-slider();
-
-
-var imgSrcs =[
-  "images/class-banner/running-group_banner2.png",
-  "images/class-banner/running-group_banner3.png",
-  "images/class-banner/running-group_banner1.png",
-];
-
-$('#cover').delay(1000).fadeIn(1000, animateBackground());
-
-function animateBackground() {
-
-  window.setTimeout(function(){
-
-      var url = imgSrcs[imgSrcs.push(imgSrcs.shift()) - 1];
-
-      $('#cover').delay(4000).fadeOut(1000, function(){
-
-          $(this).css("background-image", "url(" + url + ")")
-
-      }).fadeIn(1000, animateBackground())
-
-  });
-}
-
+Nice to haves:
+-longish about with screenshots on a link from the homepage showing exping what it is
+-you can't delete and or edit user stories you don't want
+-password reset
+-make it load with some fake data
+-assign radio button based on db 
+-our guarantee 
+-transparent footer on homepage with info
+-make sure project opens/closes when clicking anywhere
 */
-

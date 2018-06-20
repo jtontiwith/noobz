@@ -55,6 +55,7 @@ function generateSeesDoesScreens() {
 }
 
 function generateClientProjectData() {
+  
   return { user_id: generateUserIds(),
     email: generateEmailAddresses(),
     shortDesc: generateShortDesc(),
@@ -70,7 +71,7 @@ function tearDownDb() {
 }
 
 describe('clientProto API resource', function() {
-  this.timeout(5000);
+  //this.timeout(5000);
 
   before(function() {
     return runServer(TEST_DATABASE_URL);
@@ -105,6 +106,7 @@ describe('clientProto API resource', function() {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
           expect(res.body.clientProtos).to.be.a('array');
+          console.log(res.body);
           expect(res.body.clientProtos).to.have.lengthOf.at.least(1);
           
           res.body.clientProtos.forEach(function(clientProto) {
