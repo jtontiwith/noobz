@@ -10,7 +10,7 @@ teeth solving real problems.
 
 ### For non-technical founders
 
-To this day I see non-technical founders spend a bunch of money overbuilding an app only to have it fall totally flat. The truth is that founder rarely nail it on the first iteration. Non-technical founders need to be able to play with ideas, prototype, and learn. What they don't need is a professional software developer to help them do that. Why? Because you don't need an F1 mechanic to help you change a tire. n00bz is a platform to help non-technical founders design requirements for and build cheap prototypes of their app ideas. They can use it to prove (or more likey disprove) their underline hypotheses about their app ideas.
+To this day I see non-technical founders spend a bunch of money overbuilding an app only to have it fall totally flat. The truth is that founders (even experienced founders) rarely nail it on the first iteration. Non-technical founders need to be able to play with ideas, prototype, and learn. What they don't need is a professional software developer to help them do that. Why? Because you don't need an F1 mechanic to help you change a tire. n00bz is a platform to help non-technical founders design requirements for and build cheap prototypes of their app ideas. They can use it to prove (or more likey disprove) their underline hypotheses about their apps.
 
 ### For new developers 
 
@@ -44,7 +44,7 @@ If you are in the population of up and coming software developers (you can hack 
 * jQuery 
 * HTML
 * CSS
-* a little empathy for the non-technical founder, not everybody needs to code!
+* a little empathy for the non-technical founder, they do the business execution that turns code into a real company
 
 ## Features 
 
