@@ -473,7 +473,7 @@ function displayProjects(data) {
           ${projectUserstories}
           <dt class="dt-tag-user-screens">User screens</dt>
           ${projectScreens}
-          <dd>${data.clientProtos[index].email}</dd>
+          <address class="founder-email"><span class="bold-wrapper">Founder contact:</span> ${data.clientProtos[index].email}</address>
         </div>
         </dl>
       </article>`)
