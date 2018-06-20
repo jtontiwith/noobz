@@ -1,4 +1,4 @@
-## n00bz
+# n00bz
 n00bz is a platform that helps non-technical founders get cheap prototypes built, and helps new developers cut their
 teeth solving real problems. 
 
@@ -8,11 +8,11 @@ teeth solving real problems.
 
 -Steve Blank 
 
-##For non-technical founders
+### For non-technical founders
 
 To this day I see non-technical founders spend a bunch of money overbuilding an app only to have it fall totally flat. The truth is that founder rarely nail it on the first iteration. Non-technical founders need to be able to play with ideas, prototype, and learn. What they don't need is a professional software developer to help them do that. Why? Because you don't need an F1 mechanic to help you change a tire. n00bz is a platform to help non-technical founders design requirements for and build cheap prototypes of their app ideas. They can use it to prove (or more likey disprove) their underline hypotheses about their app ideas.
 
-##For new developers 
+### For new developers 
 
 If you are in the population of up and coming software developers (you can hack something together, but you aren't ready for the job market) then instead of doing yet another tutorial, you can build a prototype, solve a real problem, and get a stipend in return.  
 
@@ -33,12 +33,11 @@ If you are in the population of up and coming software developers (you can hack 
 
 ## Environment Setup 
 
-1. Download the code.
+1. Clone the repo.
 2. Run npm install.
 3. Get goin!
 
 ## Built With 
-
 
 * JS
 * node.js
@@ -49,5 +48,5 @@ If you are in the population of up and coming software developers (you can hack 
 
 ## Features 
 
-* List and create a text file of the day's responsibilities / rewards
-* See list of local events/meetups in your area to reward yourself with
+* Prototype concept design editor
+* Publish your prototype designs to a public feed so that n00b devs contact you to start building it
