@@ -147,7 +147,7 @@ function getToDashboard() {
       $(`html`).css("background", "none");
       showAndHideMain();
       $('.login-register, .centered-div').hide();
-      $('.logo').remove();
+      $('.logo').hide();
     }
   });
 }
