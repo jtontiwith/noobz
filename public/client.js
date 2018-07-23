@@ -1,18 +1,3 @@
-/*
-TO DO:
--doc the api
--more responsive for mobile 
--unify ' and ` 
-
-
-
-
-
-*/
-
-
-
-
 let mvpUserStories = [];
 let seesDoes = [];
 let userProject = {};
@@ -142,14 +127,14 @@ function postRegistrationOrLogin() {
           //stores strings
           let protoString = data.prototypes_id.join();  
           localStorage.setItem('prototype_ids', protoString);
-          
+          $(`html`).css("background", "none");
+          showAndHideMain();
+          $('.login-register, .centered-div').hide();
         },
         dataType: "json",
         contentType: "application/json"
       })
-      $(`html`).css("background", "none");
-      showAndHideMain();
-      $('.login-register, .centered-div').hide();
+      
     }  
   });  
 }
@@ -820,14 +805,3 @@ $(() => {
 
 
 
-/*
-Nice to haves:
--longish about with screenshots on a link from the homepage showing exping what it is
--you can't delete and or edit user stories you don't want
--password reset
--make it load with some fake data
--assign radio button based on db 
--our guarantee 
--transparent footer on homepage with info
--make sure project opens/closes when clicking anywhere
-*/

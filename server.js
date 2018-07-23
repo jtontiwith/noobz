@@ -41,10 +41,6 @@ app.use(function (req, res, next) {
 passport.use(localStrategy); //passport is handling the "callback"
 passport.use(jwtStrategy);
 
-//remember that .use is just saying that on '/x/x/' route use the 
-//following middleware function, and also remember that here below
-//I define the /api/ part of the path, it's just to differentiate from
-//the regular path, that's all
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 
@@ -99,8 +95,6 @@ app.get('/projects/:id', (req, res) => {
 });
 
 //here's the post request
-
-// THE WORKING VERSION
 app.post('/projects', jwtAuth, (req, res, next) => {
   console.log(req.body);
   const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens', 'user_id', 'email'];
@@ -126,16 +120,8 @@ clientProto
     console.log(clientProto.id); /// <-this fing works
     User
     .findByIdAndUpdate(req.body.user_id, { $push: {proto_ids: clientProto.id} })
-    //the params are from the URL, and the $set thing is mongo related
-    //all the mongoose methods that query the db inherently return promises
-    //the parameter in the .then() block is always the promise from the 
-    //previously returned method, the promise, I left it empty (), but 
-    //it could be anything  
-    //.then(() => res.status(201).end()) <-this works
     .then(() => res.status(201).json(clientProto.serialize()))
-    //res.status(201).json(clientProto.serialize())
     .catch(err => res.status(500).json({ message: 'Internal Server Error' }));
-    //res.status(201).json(User.serialize())
   }) //you always have to return inside the previous .then to 
   //be able to chain another then method  
   .catch(err => {
@@ -143,103 +129,6 @@ clientProto
     res.status(501).json({message: 'oh shit, Internal Server Error'})
   });
 });
-
-//remember that you can only send the response once
-
-
-/*
--I am making the assumption that id is in the response
--I am also making the assumption I know how to access it
-
-*/
-
-
-/* old new one
-app.post('/projects', jwtAuth, (req, res, next) => {
-  console.log(req.body);
-  const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens', 'user_id'];
-  for(let i = 0; i < requiredFields.length; i++) {
-    const field = requiredFields[i];
-    if(!(field in req.body)) {  
-      const message = `Missing ${field} in required fields`;
-      console.error(message);
-      return res.status(400).send(message);
-    }
-  }
-clientProto
-  .create({
-    shortDesc: req.body.shortDesc,
-    longDesc: req.body.longDesc,
-    userStories:req.body.userStories,
-    screens: req.body.screens,
-    user_id: req.body.user_id
-  })
-  .then(clientProto => {
-    const protoId = {proto_ids: res.body.id}
-  User
-    .findByIdAndUpdate(req.body.user_id, { $set: protoId })
-    //the params are from the URL, and the $set thing is mongo related
-    //.then(User => res.status(204).end())
-    //.catch(err => res.status(500).json({ message: 'Internal Server Error' }));
-    res.status(201).json(clientProto.serialize())
-  })
-  .catch(err => {
-  console.error(err);
-    res.status(501).json({message: 'oh shit, Internal Server Error'})
-  });
-
-});
-*/
-
-///NEW ONE
-/*
-app.post('/projects', jwtAuth, (req, res, next) => {
-  console.log(req.body);
-  const requiredFields = ['shortDesc', 'longDesc', 'userStories', 'screens', 'user_id'];
-  for(let i = 0; i < requiredFields.length; i++) {
-    const field = requiredFields[i];
-    if(!(field in req.body)) {  
-      const message = `Missing ${field} in required fields`;
-      console.error(message);
-      return res.status(400).send(message);
-    }
-  }
-clientProto
-  .create({
-    shortDesc: req.body.shortDesc,
-    longDesc: req.body.longDesc,
-    userStories:req.body.userStories,
-    screens: req.body.screens,
-    user_id: req.body.user_id
-  })
-  .then(clientProto => res.status(201).json(clientProto.serialize()))
-  .then(clientProto => {
-    const protoId = {proto_ids: res.body.id}
-  User
-    .findByIdAndUpdate(req.body.user_id, { $set: protoId })
-    //the params are from the URL, and the $set thing is mongo related
-    .then(User => res.status(204).end())
-    .catch(err => res.status(500).json({ message: 'Internal Server Error' }));
-    res.status(201).json(User.serialize())
-  })
-  .catch(err => {
-    console.error(err);
-    res.status(501).json({message: 'oh shit, Internal Server Error'})
-  });
-
-});
-
-*/
-
-
-
-///NEW ONE
-
-
-
-
-
-
 
 //here's the put request
 
@@ -279,7 +168,6 @@ app.put('/projects/:id', jwtAuth, (req, res) => {
 
 });
 
-
 app.delete('/projects/:id', (req, res) => {
   clientProto
     .findByIdAndRemove(req.params.id)
@@ -292,14 +180,8 @@ app.delete('/projects/:id', (req, res) => {
    res.status(404).json({ message: 'Nobody Home' });
  });
 
-// both runServer and closeServer need to access the same
-// server object, so we declare `server` here, and then when
-// runServer runs, it assigns a value.
 let server;
 
-// this function starts our server and returns a Promise.
-// In our test code, we need a way of asynchronously starting
-// our server, since we'll be dealing with promises there.
 function runServer(DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
     mongoose.connect(DATABASE_URL, err => {
@@ -318,9 +200,6 @@ function runServer(DATABASE_URL, port = PORT) {
   });
 }
 
-// like `runServer`, this function also needs to return a promise.
-// `server.close` does not return a promise on its own, so we manually
-// create one.
 function closeServer() {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
@@ -337,24 +216,8 @@ function closeServer() {
   });
 }
 
-// if server.js is called directly (aka, with `node server.js`), this block
-// runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
 if (require.main === module) {
     runServer(DATABASE_URL).catch(err => console.error(err));
   };
   
 module.exports = {app, runServer, closeServer};
-//this has something to do with only being able to run this code 
-//outside a node.js environment
-
-
-/*
--have user login before ever createing anything
--pop login before main form to create project
--
-
-
-
-
-
-*/

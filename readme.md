@@ -35,6 +35,7 @@ If you are in the population of up and coming software developers (you can hack 
 
 1. Clone the repo.
 2. Run npm install.
+3. Install mongoDB and get it running.
 3. Get goin!
 
 ## Built With 
