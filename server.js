@@ -54,7 +54,7 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
   //this right above is the controller in this case, acts like it
-})
+});
 
 app.get('/api/protected', jwtAuth, (req, res) => {
   return res.json({

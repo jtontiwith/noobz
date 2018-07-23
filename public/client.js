@@ -1,3 +1,18 @@
+/*
+TO DO:
+-doc the api
+-more responsive for mobile 
+-unify ' and ` 
+
+
+
+
+
+*/
+
+
+
+
 let mvpUserStories = [];
 let seesDoes = [];
 let userProject = {};
