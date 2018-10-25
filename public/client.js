@@ -75,8 +75,38 @@ function registerAndOrLogin(user) {
       <button class="login" type="submit">Login</button>
     </div>`);
     $(`.register-footer`).hide();
-    $(`.login-register`).append(`<footer class="login-footer">You a n00b to n00bz? <a href="#" onclick="registerAndOrLogin();"> Sign up now</a></footer>`);
+    $(`.login-register`).append(`<footer class="login-footer">You a n00b to n00bz? <a href="#" onclick="registerAndOrLogin();"> Sign up now</a> or <a href="#" onclick="demoLogin();">demo it</a>.</footer>`);
   }
+
+function demoLogin() {
+  
+  $.ajax({
+    url: "/api/auth/login",
+    type: "POST",
+    data: JSON.stringify({
+      password: "1111111111",
+      username: "sample@heysampleuser.com"
+    }),
+    success: function(data) {
+      console.log(data);
+      localStorage.setItem('jwt', data.authToken);  
+      localStorage.setItem('user_id', data.user_id);
+      localStorage.setItem('user_email', data.email);
+      //putting the ids of the user's prototype (if any)
+      //into a comma separated string b/c localStorage only
+      //stores strings
+      let protoString = data.prototypes_id.join();  
+      localStorage.setItem('prototype_ids', protoString);
+      $(`html`).css("background", "none");
+      showAndHideMain();
+      $('.login-register, .centered-div').hide();
+    },
+    dataType: "json",
+    contentType: "application/json"
+  })
+
+}
+
 
 //here we register or login a user depending on what they are doing
 function postRegistrationOrLogin() {
